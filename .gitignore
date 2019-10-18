@@ -13,3 +13,7 @@ node_modules/
 # Build
 /npm-debug.log
 out/
+
+# Because of npm link:
+
+package-lock.json
