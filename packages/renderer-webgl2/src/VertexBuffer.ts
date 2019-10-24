@@ -16,7 +16,7 @@ export class VertexBuffer
     byteLength: number;
     integer: boolean;
 
-    constructor (gl: WebGL2RenderingContext, appState: IState, type: GLenum, itemSize?: number, data?: number | BufferSource, usage: GLenum = gl.STATIC_DRAW, indexArray: boolean = false)
+    constructor (gl: WebGL2RenderingContext, appState: IState, type: GLenum, itemSize: number, data?: number | BufferSource, usage: GLenum = gl.STATIC_DRAW, indexArray: boolean = false)
     {
         this.gl = gl;
         this.appState = appState;
@@ -53,7 +53,7 @@ export class VertexBuffer
             type = gl.FLOAT;
         }
 
-        let dataLength: number = 1;
+        let dataLength: number;
         let byteLength: number;
 
         if (typeof data === 'number')
@@ -71,11 +71,8 @@ export class VertexBuffer
         {
             byteLength = data.byteLength;
 
-            //  Only ArrayBufferView has this. ArrayBuffer does not.
-            if (data.hasOwnProperty('length'))
-            {
-                dataLength = data['length'];
-            }
+            //  Otherwise TypeScript moans that 'length' isn't a valid property, but it is.
+            dataLength = data['length'];
         }
 
         this.type = type;

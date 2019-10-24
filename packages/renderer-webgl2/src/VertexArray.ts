@@ -46,14 +46,14 @@ export class VertexArray
         return this;
     }
 
-    vertexAttributeBuffer (attributeIndex: number, vertexBuffer: VertexBuffer, options: IAttributeOptions): VertexArray
+    vertexAttributeBuffer (attributeIndex: number, vertexBuffer: VertexBuffer, options?: IAttributeOptions): VertexArray
     {
         this.attributeBuffer(attributeIndex, vertexBuffer, options, false);
 
         return this;
     }
 
-    instanceAttributeBuffer (attributeIndex: number, vertexBuffer: VertexBuffer, options: IAttributeOptions): VertexArray
+    instanceAttributeBuffer (attributeIndex: number, vertexBuffer: VertexBuffer, options?: IAttributeOptions): VertexArray
     {
         this.attributeBuffer(attributeIndex, vertexBuffer, options, true);
 
