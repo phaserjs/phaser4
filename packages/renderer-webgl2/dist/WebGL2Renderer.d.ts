@@ -17,7 +17,7 @@ export declare class WebGL2Renderer {
     clearBits: number;
     contextLostExt: any;
     contextRestoredHandler: any;
-    constructor(canvas: HTMLCanvasElement, contextAttributes: any);
+    constructor(canvas: HTMLCanvasElement, contextAttributes?: WebGLContextAttributes);
     setState(): WebGL2Renderer;
     loseContext(): WebGL2Renderer;
     restoreContext(): WebGL2Renderer;

@@ -6,6 +6,12 @@ export class WebGL2Renderer {
     constructor(canvas, contextAttributes) {
         this.width = 0;
         this.height = 0;
+        this.viewport = {
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0
+        };
         this.currentDrawCalls = 0;
         this.contextLostExt = null;
         this.contextRestoredHandler = null;

@@ -22,5 +22,6 @@ export declare class Program {
     initVariables(): void;
     uniform(name: string, value: number | boolean): Program;
     bind(): Program;
+    delete(): Program;
 }
 //# sourceMappingURL=Program.d.ts.map

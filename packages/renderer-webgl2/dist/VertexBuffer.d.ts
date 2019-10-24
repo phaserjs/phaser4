@@ -12,7 +12,7 @@ export declare class VertexBuffer {
     numColumns: number;
     byteLength: number;
     integer: boolean;
-    constructor(gl: WebGL2RenderingContext, appState: IState, type: GLenum, itemSize?: number, data?: number | BufferSource, usage?: GLenum, indexArray?: boolean);
+    constructor(gl: WebGL2RenderingContext, appState: IState, type: GLenum, itemSize: number, data?: number | BufferSource, usage?: GLenum, indexArray?: boolean);
     restore(data?: number | BufferSource): VertexBuffer;
     data(data: BufferSource): VertexBuffer;
     delete(): VertexBuffer;

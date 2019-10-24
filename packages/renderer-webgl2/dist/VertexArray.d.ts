@@ -13,8 +13,8 @@ export declare class VertexArray {
     numDraws: number;
     constructor(gl: WebGL2RenderingContext, appState: IState);
     restore(): VertexArray;
-    vertexAttributeBuffer(attributeIndex: number, vertexBuffer: VertexBuffer, options: IAttributeOptions): VertexArray;
-    instanceAttributeBuffer(attributeIndex: number, vertexBuffer: VertexBuffer, options: IAttributeOptions): VertexArray;
+    vertexAttributeBuffer(attributeIndex: number, vertexBuffer: VertexBuffer, options?: IAttributeOptions): VertexArray;
+    instanceAttributeBuffer(attributeIndex: number, vertexBuffer: VertexBuffer, options?: IAttributeOptions): VertexArray;
     indexBuffer(vertexBuffer: VertexBuffer): VertexArray;
     delete(): VertexArray;
     bind(): VertexArray;

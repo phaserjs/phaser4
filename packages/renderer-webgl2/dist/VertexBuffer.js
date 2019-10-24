@@ -26,7 +26,7 @@ export class VertexBuffer {
             itemSize = 2;
             type = gl.FLOAT;
         }
-        let dataLength = 1;
+        let dataLength;
         let byteLength;
         if (typeof data === 'number') {
             dataLength = data;
@@ -37,10 +37,8 @@ export class VertexBuffer {
         }
         else {
             byteLength = data.byteLength;
-            //  Only ArrayBufferView has this. ArrayBuffer does not.
-            if (data.hasOwnProperty('length')) {
-                dataLength = data['length'];
-            }
+            //  Otherwise TypeScript moans that 'length' isn't a valid property, but it is.
+            dataLength = data['length'];
         }
         this.type = type;
         this.itemSize = itemSize;
