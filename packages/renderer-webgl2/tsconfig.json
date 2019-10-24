@@ -3,7 +3,7 @@
       "moduleResolution": "node",
       "target": "esnext",
       "module": "es2015",
-      "lib": [ "dom", "es5", "es6", "es7", "esnext" ],
+      "lib": [ "dom", "es5", "es6", "es7", "esnext", "es2017.typedarrays", "es2017.sharedmemory" ],
       "esModuleInterop": true,
       "outDir": "./dist",
       "declaration": true,

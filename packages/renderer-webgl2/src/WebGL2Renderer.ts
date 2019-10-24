@@ -1,6 +1,9 @@
 import { IState } from './IState';
 import { IViewport } from './IViewport';
 import { Program } from './Program';
+import { Shader } from './Shader';
+import { VertexArray } from './VertexArray';
+import { VertexBuffer } from './VertexBuffer';
 
 export class WebGL2Renderer
 {
@@ -212,4 +215,8 @@ export class WebGL2Renderer
         return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage);
     }
 
+    createDrawCall (program: Program, vertexArray: VertexArray, primitive)
+    {
+        return new DrawCall(this.gl, this.state, program, vertexArray, primitive);
+    }
 }
