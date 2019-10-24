@@ -15,7 +15,12 @@ export class WebGL2Renderer
     height: number = 0;
 
     state: IState;
-    viewport: IViewport;
+    viewport: IViewport = {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0
+    };
 
     currentDrawCalls: number = 0;
     emptyFragmentShader: any;
@@ -25,7 +30,7 @@ export class WebGL2Renderer
     contextLostExt = null;
     contextRestoredHandler = null;
 
-    constructor (canvas: HTMLCanvasElement, contextAttributes: any)
+    constructor (canvas: HTMLCanvasElement, contextAttributes?: WebGLContextAttributes)
     {
         const gl = canvas.getContext('webgl2', contextAttributes) as WebGL2RenderingContext;
 
@@ -33,7 +38,6 @@ export class WebGL2Renderer
         this.canvas = canvas;
 
         this.setState();
-
         this.initExtensions();
 
         this.width = gl.drawingBufferWidth;
