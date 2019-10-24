@@ -1,0 +1,1 @@
+{"version":3,"file":"IAttributeOptions.d.ts","sourceRoot":"","sources":["../src/IAttributeOptions.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,iBAAiB;IAE9B,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,IAAI,CAAC,EAAE,KAAK,CAAC;IACb,MAAM,CAAC,EAAE,OAAO,CAAC;IACjB,MAAM,CAAC,EAAE,QAAQ,CAAC;IAClB,UAAU,CAAC,EAAE,SAAS,CAAC;IACvB,OAAO,CAAC,EAAE,MAAM,CAAC;CACpB"}

@@ -1,72 +1,40 @@
 import { DrawCall } from './DrawCall';
-import { IState } from './IState';
-import { IViewport } from './IViewport';
 import { Program } from './Program';
-import { Shader } from './Shader';
 import { VertexArray } from './VertexArray';
 import { VertexBuffer } from './VertexBuffer';
-
-export class WebGL2Renderer
-{
-    canvas: HTMLCanvasElement;
-    gl: WebGL2RenderingContext;
-
-    width: number = 0;
-    height: number = 0;
-
-    state: IState;
-    viewport: IViewport;
-
-    currentDrawCalls: number = 0;
-    emptyFragmentShader: any;
-
-    clearBits: number;
-
-    contextLostExt = null;
-    contextRestoredHandler = null;
-
-    constructor (canvas: HTMLCanvasElement, contextAttributes: any)
-    {
-        const gl = canvas.getContext('webgl2', contextAttributes) as WebGL2RenderingContext;
-
-        this.gl = gl;
-        this.canvas = canvas;
-
-        this.setState();
-
-        this.initExtensions();
-
-        this.width = gl.drawingBufferWidth;
-        this.height = gl.drawingBufferHeight;
-
-        this.setViewport(0, 0, this.width, this.height);
-
-        // tslint:disable-next-line: no-bitwise
-        this.clearBits = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT;
-
+export class WebGL2Renderer {
+    constructor(canvas, contextAttributes) {
+        this.width = 0;
+        this.height = 0;
+        this.currentDrawCalls = 0;
         this.contextLostExt = null;
         this.contextRestoredHandler = null;
-
+        const gl = canvas.getContext('webgl2', contextAttributes);
+        this.gl = gl;
+        this.canvas = canvas;
+        this.setState();
+        this.initExtensions();
+        this.width = gl.drawingBufferWidth;
+        this.height = gl.drawingBufferHeight;
+        this.setViewport(0, 0, this.width, this.height);
+        // tslint:disable-next-line: no-bitwise
+        this.clearBits = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT;
+        this.contextLostExt = null;
+        this.contextRestoredHandler = null;
         this.canvas.addEventListener('webglcontextlost', (e) => {
             e.preventDefault();
         });
-
         this.canvas.addEventListener('webglcontextrestored', () => {
             this.initExtensions();
-
             if (this.contextRestoredHandler) {
                 this.contextRestoredHandler();
             }
         });
     }
-
-    setState (): WebGL2Renderer
-    {
+    setState() {
         const gl = this.gl;
-
-        const maxTextureUnits: number = gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-        const maxUniformBuffers: number = gl.getParameter(gl.MAX_UNIFORM_BUFFER_BINDINGS);
-
+        const maxTextureUnits = gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+        const maxUniformBuffers = gl.getParameter(gl.MAX_UNIFORM_BUFFER_BINDINGS);
         this.state = {
             program: null,
             vertexArray: null,
@@ -88,41 +56,26 @@ export class WebGL2Renderer
             parallelShaderCompile: Boolean(gl.getExtension('KHR_parallel_shader_compile')),
             multiDrawInstanced: Boolean(gl.getExtension('WEBGL_multi_draw_instanced'))
         };
-
         return this;
     }
-
-    loseContext (): WebGL2Renderer
-    {
-        if (this.contextLostExt)
-        {
+    loseContext() {
+        if (this.contextLostExt) {
             this.contextLostExt.loseContext();
         }
-
         return this;
     }
-
-    restoreContext (): WebGL2Renderer
-    {
-        if (this.contextLostExt)
-        {
+    restoreContext() {
+        if (this.contextLostExt) {
             this.contextLostExt.restoreContext();
         }
-
         return this;
     }
-
-    onContextRestored (callback: () => void): WebGL2Renderer
-    {
+    onContextRestored(callback) {
         this.contextRestoredHandler = callback;
-
         return this;
     }
-
-    initExtensions ()
-    {
+    initExtensions() {
         const gl = this.gl;
-
         gl.getExtension('EXT_color_buffer_float');
         gl.getExtension('OES_texture_float_linear');
         gl.getExtension('WEBGL_compressed_texture_s3tc');
@@ -133,100 +86,62 @@ export class WebGL2Renderer
         gl.getExtension('EXT_disjoint_timer_query_webgl2');
         gl.getExtension('EXT_disjoint_timer_query');
         gl.getExtension('EXT_texture_filter_anisotropic');
-
         this.contextLostExt = gl.getExtension('WEBGL_lose_context');
-
         // Draft extensions
         gl.getExtension('KHR_parallel_shader_compile');
     }
-
-    setViewport (x: number, y: number, width: number, height: number): WebGL2Renderer
-    {
+    setViewport(x, y, width, height) {
         const viewport = this.viewport;
-
-        if (viewport.width !== width || viewport.height !== height || viewport.x !== x || viewport.y !== y)
-        {
+        if (viewport.width !== width || viewport.height !== height || viewport.x !== x || viewport.y !== y) {
             viewport.x = x;
             viewport.y = y;
-
             viewport.width = width;
             viewport.height = height;
-
             this.gl.viewport(x, y, width, height);
         }
-
         return this;
     }
-
-    defaultViewport (): WebGL2Renderer
-    {
+    defaultViewport() {
         this.setViewport(0, 0, this.width, this.height);
-
         return this;
     }
-
-    resize (width: number, height: number): WebGL2Renderer
-    {
+    resize(width, height) {
         this.canvas.width = width;
         this.canvas.height = height;
-
         this.width = this.gl.drawingBufferWidth;
         this.height = this.gl.drawingBufferHeight;
-
         this.setViewport(0, 0, this.width, this.height);
-
         return this;
     }
-
-    colorMask (r: boolean, g: boolean, b: boolean, a: boolean): WebGL2Renderer
-    {
+    colorMask(r, g, b, a) {
         this.gl.colorMask(r, g, b, a);
-
         return this;
     }
-
-    clearColor (r: number, g: number, b: number, a: number): WebGL2Renderer
-    {
+    clearColor(r, g, b, a) {
         this.gl.clearColor(r, g, b, a);
-
         return this;
     }
-
-    clearMask (mask: GLenum): WebGL2Renderer
-    {
+    clearMask(mask) {
         this.clearBits = mask;
-
         return this;
     }
-
-    clear (): WebGL2Renderer
-    {
+    clear() {
         this.gl.clear(this.clearBits);
-
         return this;
     }
-
-    createProgram (vsSource: string | Shader, fsSource: string | Shader): Program
-    {
+    createProgram(vsSource, fsSource) {
         const program = new Program(this.gl, this.state, vsSource, fsSource);
-
         program.link().checkLinkage();
-
         return program;
     }
-
-    createVertexArray ()
-    {
+    createVertexArray() {
         return new VertexArray(this.gl, this.state);
     }
-
-    createVertexBuffer (type: GLenum, itemSize: number, data: ArrayBufferView | number, usage?: GLenum)
-    {
+    createVertexBuffer(type, itemSize, data, usage) {
         return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage);
     }
-
-    createDrawCall (program: Program, vertexArray: VertexArray): DrawCall
-    {
+    createDrawCall(program, vertexArray) {
         return new DrawCall(this.gl, this.state, program, vertexArray);
     }
 }
+//# sourceMappingURL=WebGL2Renderer.js.map

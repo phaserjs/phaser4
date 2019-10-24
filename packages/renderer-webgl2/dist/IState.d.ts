@@ -1,5 +1,4 @@
-export interface IState
-{
+export interface IState {
     program: WebGLProgram;
     vertexArray: WebGLVertexArrayObject;
     transformFeedback: WebGLTransformFeedback;
@@ -20,3 +19,4 @@ export interface IState
     parallelShaderCompile: boolean;
     multiDrawInstanced: boolean;
 }
+//# sourceMappingURL=IState.d.ts.map

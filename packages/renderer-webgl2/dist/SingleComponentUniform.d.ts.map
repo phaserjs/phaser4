@@ -1,0 +1,1 @@
+{"version":3,"file":"SingleComponentUniform.d.ts","sourceRoot":"","sources":["../src/SingleComponentUniform.ts"],"names":[],"mappings":"AAEA,qBAAa,sBAAsB;IAE/B,EAAE,EAAE,sBAAsB,CAAC;IAC3B,MAAM,EAAE,oBAAoB,CAAC;IAC7B,MAAM,MAAC;IACP,KAAK,EAAE,OAAO,GAAG,MAAM,CAAC;gBAEX,EAAE,EAAE,sBAAsB,EAAE,MAAM,EAAE,oBAAoB,EAAE,IAAI,EAAE,eAAe;IAa5F,GAAG,CAAE,KAAK,EAAE,OAAO,GAAG,MAAM;CAS/B"}

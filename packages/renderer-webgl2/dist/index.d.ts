@@ -14,3 +14,4 @@ export * from './SingleComponentUniform';
 export * from './VertexArray';
 export * from './VertexBuffer';
 export * from './WebGL2Renderer';
+//# sourceMappingURL=index.d.ts.map
