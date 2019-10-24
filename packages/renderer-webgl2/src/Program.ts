@@ -1,28 +1,36 @@
-import { WEBGL_INFO } from './WebGLInfo';
+import { UNIFORMS } from './const';
+import { IState } from './IState';
+import { MatrixUniform } from './MatrixUniform';
+import { MultiBoolUniform } from './MultiBoolUniform';
+import { MultiNumericUniform } from './MultiNumericUniform';
+import { Shader } from './Shader';
+import { SingleComponentUniform } from './SingleComponentUniform';
 
 export class Program
 {
     gl: WebGL2RenderingContext;
-    appState;
-    program;
-    transformFeedbackVaryings = null;
+    appState: IState;
+    program: WebGLProgram;
+
     uniforms = {};
     uniformBlocks = {};
-    uniformBlockCount = 0;
+    uniformBlockCount: number = 0;
+
     samplers = {};
-    samplerCount = 0;
+    samplerCount: number = 0;
 
-    vertexSource = null;
-    vertexShader = null;
-    fragmentSource = null;
-    fragmentShader = null;
-    linked = false;
+    vertexSource: string;
+    vertexShader: Shader;
 
-    constructor (gl, appState, vsSource, fsSource, xformFeebackVars)
+    fragmentSource: string;
+    fragmentShader: Shader;
+
+    linked: boolean = false;
+
+    constructor (gl: WebGL2RenderingContext, appState: IState, vsSource: string | Shader, fsSource: string | Shader)
     {
         this.gl = gl;
         this.appState = appState;
-        this.transformFeedbackVaryings = xformFeebackVars || null;
 
         if (typeof vsSource === 'string')
         {
@@ -83,11 +91,6 @@ export class Program
         gl.attachShader(program, this.vertexShader.shader);
         gl.attachShader(program, this.fragmentShader.shader);
 
-        if (this.transformFeedbackVaryings)
-        {
-            this.gl.transformFeedbackVaryings(program, this.transformFeedbackVaryings, gl.SEPARATE_ATTRIBS);
-        }
-
         gl.linkProgram(program);
 
         return this;
@@ -95,7 +98,7 @@ export class Program
 
     checkCompletion (): boolean
     {
-        if (WEBGL_INFO.PARALLEL_SHADER_COMPILE)
+        if (this.gl.getExtension('KHR_parallel_shader_compile'))
         {
             // COMPLETION_STATUS_KHR
             return this.gl.getProgramParameter(this.program, 0x91B1);
@@ -111,14 +114,17 @@ export class Program
             return this;
         }
 
-        if (this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS))
+        const gl = this.gl;
+        const program = this.program;
+
+        if (gl.getProgramParameter(program, gl.LINK_STATUS))
         {
             this.linked = true;
             this.initVariables();
         }
         else
         {
-            console.error(this.gl.getProgramInfoLog(this.program));
+            console.error(gl.getProgramInfoLog(program));
 
             this.vertexShader.checkCompilation();
             this.fragmentShader.checkCompilation();
@@ -150,91 +156,60 @@ export class Program
 
         let textureUnit: number;
 
-        for (let i = 0; i < numUniforms; ++i)
+        for (let i = 0; i < numUniforms; i++)
         {
-            const uniformInfo = gl.getActiveUniform(program, i);
-            const uniformHandle = gl.getUniformLocation(program, uniformInfo.name);
-            const type = uniformInfo.type;
-            const numElements = uniformInfo.size;
+            const uniformInfo: WebGLActiveInfo = gl.getActiveUniform(program, i);
+            const uniformHandle: WebGLUniformLocation = gl.getUniformLocation(program, uniformInfo.name);
+            const type: number = uniformInfo.type;
+            const numElements: number = uniformInfo.size;
 
-            let UniformClass = null;
-
-            switch (type)
+            if (UNIFORMS.SAMPLER.indexOf(type) !== -1)
             {
-                case gl.SAMPLER_2D:
-                case gl.INT_SAMPLER_2D:
-                case gl.UNSIGNED_INT_SAMPLER_2D:
-                case gl.SAMPLER_2D_SHADOW:
-                case gl.SAMPLER_2D_ARRAY:
-                case gl.INT_SAMPLER_2D_ARRAY:
-                case gl.UNSIGNED_INT_SAMPLER_2D_ARRAY:
-                case gl.SAMPLER_2D_ARRAY_SHADOW:
-                case gl.SAMPLER_CUBE:
-                case gl.INT_SAMPLER_CUBE:
-                case gl.UNSIGNED_INT_SAMPLER_CUBE:
-                case gl.SAMPLER_CUBE_SHADOW:
-                case gl.SAMPLER_3D:
-                case gl.INT_SAMPLER_3D:
-                case gl.UNSIGNED_INT_SAMPLER_3D:
-                    textureUnit = this.samplerCount++;
-                    this.samplers[uniformInfo.name] = textureUnit;
-                    gl.uniform1i(uniformHandle, textureUnit);
-                    break;
+                textureUnit = this.samplerCount++;
 
-                case gl.INT:
-                case gl.UNSIGNED_INT:
-                case gl.FLOAT:
-                    UniformClass = (numElements > 1) ? MultiNumericUniform : SingleComponentUniform;
-                    break;
+                this.samplers[uniformInfo.name] = textureUnit;
 
-                case gl.BOOL:
-                    UniformClass = (numElements > 1) ? MultiBoolUniform : SingleComponentUniform;
-                    break;
-
-                case gl.FLOAT_VEC2:
-                case gl.INT_VEC2:
-                case gl.UNSIGNED_INT_VEC2:
-                case gl.FLOAT_VEC3:
-                case gl.INT_VEC3:
-                case gl.UNSIGNED_INT_VEC3:
-                case gl.FLOAT_VEC4:
-                case gl.INT_VEC4:
-                case gl.UNSIGNED_INT_VEC4:
-                    UniformClass = MultiNumericUniform;
-                    break;
-
-                case gl.BOOL_VEC2:
-                case gl.BOOL_VEC3:
-                case gl.BOOL_VEC4:
-                    UniformClass = MultiBoolUniform;
-                    break;
-
-                case gl.FLOAT_MAT2:
-                case gl.FLOAT_MAT3:
-                case gl.FLOAT_MAT4:
-                case gl.FLOAT_MAT2x3:
-                case gl.FLOAT_MAT2x4:
-                case gl.FLOAT_MAT3x2:
-                case gl.FLOAT_MAT3x4:
-                case gl.FLOAT_MAT4x2:
-                case gl.FLOAT_MAT4x3:
-                    UniformClass = MatrixUniform;
-                    break;
-
-                default:
-                    console.error('Unrecognized uniform type: ' + uniformInfo.name);
-                    break;
+                gl.uniform1i(uniformHandle, textureUnit);
             }
-
-            if (UniformClass)
+            else if (UNIFORMS.VEC.indexOf(type) !== -1)
             {
-                this.uniforms[uniformInfo.name] = new UniformClass(gl, uniformHandle, type, numElements);
+                this.uniforms[uniformInfo.name] = new MultiNumericUniform(gl, uniformHandle, uniformInfo, numElements);
+            }
+            else if (UNIFORMS.MAT.indexOf(type) !== -1)
+            {
+                this.uniforms[uniformInfo.name] = new MatrixUniform(gl, uniformHandle, uniformInfo, numElements);
+            }
+            else if (UNIFORMS.BOOL.indexOf(type) !== -1)
+            {
+                if (numElements > 1)
+                {
+                    this.uniforms[uniformInfo.name] = new MultiBoolUniform(gl, uniformHandle, uniformInfo, numElements);
+                }
+                else
+                {
+                    this.uniforms[uniformInfo.name] = new SingleComponentUniform(gl, uniformHandle, uniformInfo);
+                }
+            }
+            else if (type === gl.INT || type === gl.UNSIGNED_INT || type === gl.FLOAT)
+            {
+                if (numElements > 1)
+                {
+                    this.uniforms[uniformInfo.name] = new MultiNumericUniform(gl, uniformHandle, uniformInfo, numElements);
+                }
+                else
+                {
+                    this.uniforms[uniformInfo.name] = new SingleComponentUniform(gl, uniformHandle, uniformInfo);
+                }
+            }
+            else
+            {
+                console.error('Unknown uniform type');
             }
         }
 
         const numUniformBlocks = gl.getProgramParameter(program, gl.ACTIVE_UNIFORM_BLOCKS);
 
-        for (let i = 0; i < numUniformBlocks; ++i)
+        for (let i = 0; i < numUniformBlocks; i++)
         {
             const blockName = gl.getActiveUniformBlockName(program, i);
             const blockIndex = gl.getUniformBlockIndex(program, blockName);
@@ -247,10 +222,8 @@ export class Program
         }
     }
 
-    // Set the value of a uniform.
-    uniform (name, value)
+    uniform (name: string, value: number | boolean): Program
     {
-        // some uniforms are optimized out
         if (this.uniforms[name])
         {
             this.uniforms[name].set(value);
@@ -259,17 +232,17 @@ export class Program
         return this;
     }
 
-    // Use this program.
-    bind ()
+    bind (): Program
     {
-        if (this.appState.program !== this)
+        const appState = this.appState;
+
+        if (appState.program !== this)
         {
             this.gl.useProgram(this.program);
 
-            this.appState.program = this;
+            appState.program = this;
         }
 
         return this;
     }
-
 }

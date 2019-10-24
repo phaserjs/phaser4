@@ -1,37 +1,22 @@
-import { init, WEBGL_INFO } from './WebGLInfo';
+import { IState } from './IState';
+import { IViewport } from './IViewport';
+import { Program } from './Program';
 
 export class WebGL2Renderer
 {
     canvas: HTMLCanvasElement;
     gl: WebGL2RenderingContext;
+
     width: number = 0;
     height: number = 0;
-    viewportX: number = 0;
-    viewportY: number = 0;
-    viewportWidth: number = 0;
-    viewportHeight: number = 0;
+
+    state: IState;
+    viewport: IViewport;
+
     currentDrawCalls: number = 0;
     emptyFragmentShader: any;
 
-    state = {
-        program: null,
-        vertexArray: null,
-        transformFeedback: null,
-        activeTexture: -1,
-        textures: null,
-        uniformBuffers: null,
-        freeUniformBufferBases: [],
-        drawFramebuffer: null,
-        readFramebuffer: null,
-        extensions: {
-            debugShaders: null,
-            multiDrawInstanced: null
-        }
-    };
-
     clearBits: number;
-    cpuTime: number;
-    gpuTime: number;
 
     contextLostExt = null;
     contextRestoredHandler = null;
@@ -43,27 +28,20 @@ export class WebGL2Renderer
         this.gl = gl;
         this.canvas = canvas;
 
-        init(gl);
+        this.setState();
+
+        this.initExtensions();
 
         this.width = gl.drawingBufferWidth;
         this.height = gl.drawingBufferHeight;
 
-        const state = this.state;
+        this.setViewport(0, 0, this.width, this.height);
 
-        state.textures = new Array(WEBGL_INFO.MAX_TEXTURE_UNITS);
-        state.uniformBuffers = new Array(WEBGL_INFO.MAX_UNIFORM_BUFFERS);
-
-        this.clearBits = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT| gl.STENCIL_BUFFER_BIT;
-
-        this.cpuTime = 0;
-        this.gpuTime = 0;
-
-        this.viewport(0, 0, this.width, this.height);
+        // tslint:disable-next-line: no-bitwise
+        this.clearBits = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT;
 
         this.contextLostExt = null;
         this.contextRestoredHandler = null;
-
-        this.initExtensions();
 
         this.canvas.addEventListener('webglcontextlost', (e) => {
             e.preventDefault();
@@ -76,6 +54,29 @@ export class WebGL2Renderer
                 this.contextRestoredHandler();
             }
         });
+    }
+
+    setState (): WebGL2Renderer
+    {
+        const gl = this.gl;
+
+        this.state = {
+            program: null,
+            vertexArray: null,
+            transformFeedback: null,
+            activeTexture: -1,
+            textures: new Array(gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS)),
+            uniformBuffers: new Array(gl.getParameter(gl.MAX_UNIFORM_BUFFER_BINDINGS)),
+            freeUniformBufferBases: [],
+            drawFramebuffer: null,
+            readFramebuffer: null,
+            extensions: {
+                debugShaders: gl.getExtension('WEBGL_debug_shaders'),
+                multiDrawInstanced: gl.getExtension('WEBGL_multi_draw_instanced')
+            }
+        };
+
+        return this;
     }
 
     loseContext (): WebGL2Renderer
@@ -120,26 +121,25 @@ export class WebGL2Renderer
         gl.getExtension('EXT_disjoint_timer_query');
         gl.getExtension('EXT_texture_filter_anisotropic');
 
-        this.state.extensions.debugShaders = gl.getExtension('WEBGL_debug_shaders');
         this.contextLostExt = gl.getExtension('WEBGL_lose_context');
 
         // Draft extensions
         gl.getExtension('KHR_parallel_shader_compile');
-
-        this.state.extensions.multiDrawInstanced = gl.getExtension('WEBGL_multi_draw_instanced');
     }
 
-    viewport (x: number, y: number, width: number, height: number): WebGL2Renderer
+    setViewport (x: number, y: number, width: number, height: number): WebGL2Renderer
     {
-        if (this.viewportWidth !== width || this.viewportHeight !== height || this.viewportX !== x || this.viewportY !== y)
+        const viewport = this.viewport;
+
+        if (viewport.width !== width || viewport.height !== height || viewport.x !== x || viewport.y !== y)
         {
-            this.viewportX = x;
-            this.viewportY = y;
+            viewport.x = x;
+            viewport.y = y;
 
-            this.viewportWidth = width;
-            this.viewportHeight = height;
+            viewport.width = width;
+            viewport.height = height;
 
-            this.gl.viewport(x, y, this.viewportWidth, this.viewportHeight);
+            this.gl.viewport(x, y, width, height);
         }
 
         return this;
@@ -147,7 +147,7 @@ export class WebGL2Renderer
 
     defaultViewport (): WebGL2Renderer
     {
-        this.viewport(0, 0, this.width, this.height);
+        this.setViewport(0, 0, this.width, this.height);
 
         return this;
     }
@@ -160,7 +160,7 @@ export class WebGL2Renderer
         this.width = this.gl.drawingBufferWidth;
         this.height = this.gl.drawingBufferHeight;
 
-        this.viewport(0, 0, this.width, this.height);
+        this.setViewport(0, 0, this.width, this.height);
 
         return this;
     }
@@ -193,13 +193,23 @@ export class WebGL2Renderer
         return this;
     }
 
-    createProgram (vsSource, fsSource, xformFeedbackVars): Program
+    createProgram (vsSource: string | Shader, fsSource: string | Shader): Program
     {
-        const program = new Program(this.gl, this.state, vsSource, fsSource, xformFeedbackVars);
+        const program = new Program(this.gl, this.state, vsSource, fsSource);
 
         program.link().checkLinkage();
 
         return program;
+    }
+
+    createVertexArray ()
+    {
+        return new VertexArray(this.gl, this.state);
+    }
+
+    createVertexBuffer (type: GLenum, itemSize: number, data: ArrayBufferView | number, usage?: GLenum)
+    {
+        return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage);
     }
 
 }
