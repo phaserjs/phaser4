@@ -1,5 +1,6 @@
 import { IState } from './IState';
 import { Program } from './Program';
+import { Texture } from './Texture';
 import { VertexArray } from './VertexArray';
 export declare class DrawCall {
     gl: WebGL2RenderingContext;
@@ -23,6 +24,7 @@ export declare class DrawCall {
     constructor(gl: WebGL2RenderingContext, appState: IState, program: Program, vertexArray?: VertexArray);
     setPrimitive(primitive: GLenum): DrawCall;
     uniform(name: string, value: any): DrawCall;
+    texture(name: string, texture: Texture): DrawCall;
     drawRanges(...counts: any[]): DrawCall;
     draw(): DrawCall;
 }

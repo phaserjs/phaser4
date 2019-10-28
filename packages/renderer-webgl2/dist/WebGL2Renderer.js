@@ -1,5 +1,8 @@
 import { DrawCall } from './DrawCall';
 import { Program } from './Program';
+import { Query } from './Query';
+import { Renderbuffer } from './Renderbuffer';
+import { Texture } from './Texture';
 import { VertexArray } from './VertexArray';
 import { VertexBuffer } from './VertexBuffer';
 export class WebGL2Renderer {
@@ -23,6 +26,9 @@ export class WebGL2Renderer {
         this.width = gl.drawingBufferWidth;
         this.height = gl.drawingBufferHeight;
         this.setViewport(0, 0, this.width, this.height);
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+        gl.blendEquation(gl.FUNC_ADD);
         // tslint:disable-next-line: no-bitwise
         this.clearBits = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT;
         this.contextLostExt = null;
@@ -41,6 +47,7 @@ export class WebGL2Renderer {
         const gl = this.gl;
         const maxTextureUnits = gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
         const maxUniformBuffers = gl.getParameter(gl.MAX_UNIFORM_BUFFER_BINDINGS);
+        const textureAnisotropy = gl.getExtension('EXT_texture_filter_anisotropic');
         this.state = {
             program: null,
             vertexArray: null,
@@ -58,6 +65,8 @@ export class WebGL2Renderer {
             maxTextureUnits,
             maxUniformBuffers,
             maxUniforms: Math.min(gl.getParameter(gl.MAX_VERTEX_UNIFORM_VECTORS), gl.getParameter(gl.MAX_FRAGMENT_UNIFORM_VECTORS)),
+            textureAnisotropy,
+            maxTextureAnisotropy: (textureAnisotropy) ? gl.getParameter(0x84FF) : 1,
             samples: gl.getParameter(gl.SAMPLES),
             parallelShaderCompile: Boolean(gl.getExtension('KHR_parallel_shader_compile')),
             multiDrawInstanced: Boolean(gl.getExtension('WEBGL_multi_draw_instanced'))
@@ -146,8 +155,39 @@ export class WebGL2Renderer {
     createVertexBuffer(type, itemSize, data, usage) {
         return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage);
     }
+    createMatrixBuffer(type, data, usage = this.gl.STATIC_DRAW) {
+        return new VertexBuffer(this.gl, this.state, type, 0, data, usage);
+    }
+    createInterleavedBuffer(bytesPerVertex, data, usage = this.gl.STATIC_DRAW) {
+        return new VertexBuffer(this.gl, this.state, null, bytesPerVertex, data, usage);
+    }
+    createIndexBuffer(type, itemSize, data, usage = this.gl.STATIC_DRAW) {
+        return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage, true);
+    }
     createDrawCall(program, vertexArray) {
         return new DrawCall(this.gl, this.state, program, vertexArray);
+    }
+    // createFramebuffer (): Framebuffer
+    // {
+    //     return new Framebuffer(this.gl, this.state);
+    // }
+    createQuery(target) {
+        return new Query(this.gl, target);
+    }
+    createRenderbuffer(width, height, internalFormat, samples = 0) {
+        return new Renderbuffer(this.gl, width, height, internalFormat, samples);
+    }
+    createEmptyTexture2D(width, height, options = {}) {
+        return new Texture(this.gl, this.state, this.gl.TEXTURE_2D, null, width, height, 0, false, options);
+    }
+    createTexture2D(image, width, height, options = {}) {
+        if (!width && image && image.width) {
+            width = image.width;
+        }
+        if (!height && image && image.height) {
+            height = image.height;
+        }
+        return new Texture(this.gl, this.state, this.gl.TEXTURE_2D, image, width, height, 0, false, options);
     }
 }
 //# sourceMappingURL=WebGL2Renderer.js.map

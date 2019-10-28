@@ -57,6 +57,11 @@ export class DrawCall {
         return this;
     }
     */
+    texture(name, texture) {
+        const unit = this.currentProgram.samplers[name];
+        this.textures[unit] = texture;
+        return this;
+    }
     drawRanges(...counts) {
         this.numDraws = counts.length;
         if (this.offsets.length < this.numDraws) {
