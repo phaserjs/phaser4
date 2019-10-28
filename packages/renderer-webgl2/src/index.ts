@@ -3,7 +3,6 @@ export * from './GetTypeSize';
 export * from './GetUniform';
 export * from './IAttributeOptions';
 export * from './IState';
-export * from './ITextureSource';
 export * from './IUniformData';
 export * from './IViewport';
 export * from './MatrixUniform';

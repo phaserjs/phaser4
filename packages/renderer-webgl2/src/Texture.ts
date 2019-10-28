@@ -1,6 +1,5 @@
 import { IState } from './IState';
 import { ITexture } from './ITexture';
-import { ITextureSource } from './ITextureSource';
 
 export class Texture
 {
@@ -44,7 +43,7 @@ export class Texture
     premultiplyAlpha: boolean;
     mipmaps: boolean;
 
-    constructor (gl: WebGL2RenderingContext, appState: IState, binding: GLenum, image?: ITextureSource, width: number = 0, height: number = 0, depth: number = 0, is3D: boolean = false, options: ITexture = {})
+    constructor (gl: WebGL2RenderingContext, appState: IState, binding: GLenum, image?: TexImageSource, width: number = 0, height: number = 0, depth: number = 0, is3D: boolean = false, options: ITexture = {})
     {
         this.gl = gl;
         this.appState = appState;
@@ -68,7 +67,7 @@ export class Texture
         this.is3D = is3D;
 
         this.compressed = (options.compressed) ? true : false;
-        
+
         if (this.compressed)
         {
             this.internalFormat = options.internalFormat;
@@ -108,8 +107,8 @@ export class Texture
             baseLevel = null,
             maxLevel = null,
             maxAnisotropy = 1,
-            flipY = false,
-            premultiplyAlpha = false
+            flipY = true,
+            premultiplyAlpha = true
         } = options;
 
         this.minFilter = minFilter;
@@ -130,7 +129,6 @@ export class Texture
 
         this.maxAnisotropy = Math.min(maxAnisotropy, appState.maxTextureUnits);
         this.flipY = flipY;
-
         this.premultiplyAlpha = premultiplyAlpha;
 
         this.mipmaps = (minFilter === gl.LINEAR_MIPMAP_NEAREST || minFilter === gl.LINEAR_MIPMAP_LINEAR);
@@ -138,7 +136,7 @@ export class Texture
         this.restore(image);
     }
 
-    restore (image: ITextureSource | ITextureSource[]): Texture
+    restore (image: TexImageSource | TexImageSource[]): Texture
     {
         this.texture = null;
 
@@ -163,7 +161,10 @@ export class Texture
             return this;
         }
 
-        gl.deleteTexture(texture);
+        if (texture)
+        {
+            gl.deleteTexture(texture);
+        }
 
         if (this.currentUnit !== -1)
         {
@@ -171,6 +172,8 @@ export class Texture
         }
 
         texture = gl.createTexture();
+
+        this.texture = texture;
 
         this.bind(Math.max(this.currentUnit, 0));
 
@@ -234,12 +237,10 @@ export class Texture
             gl.texStorage2D(binding, levels, this.internalFormat, width, height);
         }
 
-        this.texture = texture;
-
         return this;
     }
 
-    data (data: ITextureSource | ITextureSource[] | ArrayBufferView | ArrayBufferView[]): Texture
+    data (data: TexImageSource | TexImageSource[] | ArrayBufferView | ArrayBufferView[]): Texture
     {
         const gl = this.gl;
         const binding = this.binding;
@@ -294,7 +295,7 @@ export class Texture
         {
             for (i = 0; i < numLevels; i++)
             {
-                gl.texSubImage3D(binding, i, 0, 0, 0, width, height, depth, format, type, data[i]);
+                gl.texSubImage3D(binding, i, 0, 0, 0, width, height, depth, format, type, source[i] as TexImageSource);
 
                 // tslint:disable-next-line: no-bitwise
                 width = Math.max(width >> 1, 1);
@@ -310,7 +311,7 @@ export class Texture
         {
             for (i = 0; i < numLevels; i++)
             {
-                gl.texSubImage2D(binding, i, 0, 0, width, height, format, type, data[i]);
+                gl.texSubImage2D(binding, i, 0, 0, width, height, format, type, source[i] as TexImageSource);
 
                 // tslint:disable-next-line: no-bitwise
                 width = Math.max(width >> 1, 1);
@@ -379,6 +380,4 @@ export class Texture
 
         return this;
     }
-
-
 }
