@@ -8,7 +8,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc --build tsconfig.json"
+    "build": "tsc --build tsconfig.json",
+    "watch": "tsc --build --watch tsconfig.json"
   },
   "files": [
     "dist/**/*"
