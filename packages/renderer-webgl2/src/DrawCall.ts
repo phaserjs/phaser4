@@ -1,5 +1,6 @@
 import { IState } from './IState';
 import { Program } from './Program';
+import { Texture } from './Texture';
 import { VertexArray } from './VertexArray';
 
 export class DrawCall
@@ -106,8 +107,17 @@ export class DrawCall
     }
     */
 
-   drawRanges (...counts): DrawCall
-   {
+    texture (name: string, texture: Texture): DrawCall
+    {
+        const unit = this.currentProgram.samplers[name];
+
+        this.textures[unit] = texture;
+
+        return this;
+    }
+
+    drawRanges (...counts): DrawCall
+    {
         this.numDraws = counts.length;
 
         if (this.offsets.length < this.numDraws)
