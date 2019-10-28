@@ -1,10 +1,12 @@
+import { Texture } from './Texture';
+
 export interface IState
 {
     program: WebGLProgram;
     vertexArray: WebGLVertexArrayObject;
     transformFeedback: WebGLTransformFeedback;
     activeTexture: number;
-    textures: WebGLTexture[];
+    textures: Texture[];
     uniformBuffers: WebGLBuffer[];
     freeUniformBufferBases: [];
     drawFramebuffer: WebGLFramebuffer;
@@ -14,6 +16,8 @@ export interface IState
         multiDrawInstanced: any;
     };
     maxTextureUnits: number;
+    textureAnisotropy: EXT_texture_filter_anisotropic;
+    maxTextureAnisotropy: number;
     maxUniformBuffers: number;
     maxUniforms: number;
     samples: number;

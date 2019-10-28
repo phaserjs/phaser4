@@ -2,9 +2,14 @@ import { DrawCall } from './DrawCall';
 import { IState } from './IState';
 import { IViewport } from './IViewport';
 import { Program } from './Program';
+import { Query } from './Query';
+import { Renderbuffer } from './Renderbuffer';
 import { Shader } from './Shader';
 import { VertexArray } from './VertexArray';
 import { VertexBuffer } from './VertexBuffer';
+import { Texture } from './Texture';
+import { ITexture } from './ITexture';
+import { ITextureSource } from './ITextureSource';
 
 export class WebGL2Renderer
 {
@@ -56,9 +61,11 @@ export class WebGL2Renderer
         });
 
         this.canvas.addEventListener('webglcontextrestored', () => {
+
             this.initExtensions();
 
-            if (this.contextRestoredHandler) {
+            if (this.contextRestoredHandler)
+            {
                 this.contextRestoredHandler();
             }
         });
@@ -70,6 +77,7 @@ export class WebGL2Renderer
 
         const maxTextureUnits: number = gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
         const maxUniformBuffers: number = gl.getParameter(gl.MAX_UNIFORM_BUFFER_BINDINGS);
+        const textureAnisotropy = gl.getExtension('EXT_texture_filter_anisotropic');
 
         this.state = {
             program: null,
@@ -88,6 +96,8 @@ export class WebGL2Renderer
             maxTextureUnits,
             maxUniformBuffers,
             maxUniforms: Math.min(gl.getParameter(gl.MAX_VERTEX_UNIFORM_VECTORS), gl.getParameter(gl.MAX_FRAGMENT_UNIFORM_VECTORS)),
+            textureAnisotropy,
+            maxTextureAnisotropy: (textureAnisotropy) ? gl.getParameter(0x84FF) : 1,
             samples: gl.getParameter(gl.SAMPLES),
             parallelShaderCompile: Boolean(gl.getExtension('KHR_parallel_shader_compile')),
             multiDrawInstanced: Boolean(gl.getExtension('WEBGL_multi_draw_instanced'))
@@ -229,8 +239,58 @@ export class WebGL2Renderer
         return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage);
     }
 
+    createMatrixBuffer(type: GLenum, data: ArrayBufferView, usage: GLenum = this.gl.STATIC_DRAW): VertexBuffer
+    {
+        return new VertexBuffer(this.gl, this.state, type, 0, data, usage);
+    }
+
+    createInterleavedBuffer(bytesPerVertex: number, data: ArrayBufferView | number, usage: GLenum = this.gl.STATIC_DRAW): VertexBuffer
+    {
+        return new VertexBuffer(this.gl, this.state, null, bytesPerVertex, data, usage);
+    }
+
+    createIndexBuffer(type: GLenum, itemSize: number, data: ArrayBufferView, usage: GLenum = this.gl.STATIC_DRAW): VertexBuffer
+    {
+        return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage, true);
+    }
+
     createDrawCall (program: Program, vertexArray: VertexArray): DrawCall
     {
         return new DrawCall(this.gl, this.state, program, vertexArray);
+    }
+
+    // createFramebuffer (): Framebuffer
+    // {
+    //     return new Framebuffer(this.gl, this.state);
+    // }
+
+    createQuery (target: GLenum): Query
+    {
+        return new Query(this.gl, target);
+    }
+
+    createRenderbuffer (width: number, height: number, internalFormat: GLenum, samples: number = 0): Renderbuffer
+    {
+        return new Renderbuffer(this.gl, width, height, internalFormat, samples);
+    }
+
+    createEmptyTexture2D (width: number, height: number, options: ITexture = {}): Texture
+    {
+        return new Texture(this.gl, this.state, this.gl.TEXTURE_2D, null, width, height, 0, false, options);
+    }
+
+    createTexture2D (image: ITextureSource, width?: number, height?: number, options: ITexture = {}): Texture
+    {
+        if (!width && image && image.width)
+        {
+            width = image.width;
+        }
+
+        if (!height && image && image.height)
+        {
+            height = image.height;
+        }
+
+        return new Texture(this.gl, this.state, this.gl.TEXTURE_2D, image, width, height, 0, false, options);
     }
 }
