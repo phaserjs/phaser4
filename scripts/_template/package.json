@@ -21,6 +21,6 @@
   "license": "MIT",
   "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
   "dependencies": {
-    "typescript": "^3.6.2"
+    "typescript": "^3.6.4"
   }
 }

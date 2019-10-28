@@ -17,14 +17,14 @@
   },
   "homepage": "https://phaser.io",
   "devDependencies": {
-    "chokidar": "^3.2.2",
-    "lerna": "^3.18.1",
+    "chokidar": "^3.2.3",
+    "lerna": "^3.18.3",
     "lerna-wizard": "^1.1.1",
-    "rollup": "^1.24.0",
+    "rollup": "^1.26.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-terser": "^5.1.2",
-    "rollup-plugin-typescript2": "^0.24.3",
+    "rollup-plugin-typescript2": "^0.25.1",
     "tslint": "^5.20.0",
     "typescript": "^3.6.4"
   }
