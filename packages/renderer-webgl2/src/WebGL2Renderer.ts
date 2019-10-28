@@ -1,15 +1,14 @@
 import { DrawCall } from './DrawCall';
 import { IState } from './IState';
+import { ITexture } from './ITexture';
 import { IViewport } from './IViewport';
 import { Program } from './Program';
 import { Query } from './Query';
 import { Renderbuffer } from './Renderbuffer';
 import { Shader } from './Shader';
+import { Texture } from './Texture';
 import { VertexArray } from './VertexArray';
 import { VertexBuffer } from './VertexBuffer';
-import { Texture } from './Texture';
-import { ITexture } from './ITexture';
-import { ITextureSource } from './ITextureSource';
 
 export class WebGL2Renderer
 {
