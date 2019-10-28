@@ -50,6 +50,10 @@ export class WebGL2Renderer
 
         this.setViewport(0, 0, this.width, this.height);
 
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+        gl.blendEquation(gl.FUNC_ADD);
+
         // tslint:disable-next-line: no-bitwise
         this.clearBits = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT;
 
@@ -279,7 +283,7 @@ export class WebGL2Renderer
         return new Texture(this.gl, this.state, this.gl.TEXTURE_2D, null, width, height, 0, false, options);
     }
 
-    createTexture2D (image: ITextureSource, width?: number, height?: number, options: ITexture = {}): Texture
+    createTexture2D (image: TexImageSource, width?: number, height?: number, options: ITexture = {}): Texture
     {
         if (!width && image && image.width)
         {
