@@ -1,6 +1,7 @@
 import { IState } from './IState';
 import { Program } from './Program';
 import { Texture } from './Texture';
+import { UniformBuffer } from './UniformBuffer';
 import { VertexArray } from './VertexArray';
 
 export class DrawCall
@@ -10,15 +11,14 @@ export class DrawCall
     currentProgram: Program;
     drawPrimitive: GLenum;
     currentVertexArray: VertexArray;
-    // currentTransformFeedback: any;
     uniformIndices: {};
     uniformNames: string[];
     uniformValues: any[];
     uniformCount: number;
-    uniformBuffers: any[];
-    uniformBlockNames: any[];
+    uniformBuffers: UniformBuffer[];
+    uniformBlockNames: string[];
     uniformBlockCount: number;
-    textures: any[];
+    textures: Texture[];
     textureCount: number;
     offsets: Int32Array;
     numElements: Int32Array;
@@ -33,7 +33,6 @@ export class DrawCall
         this.currentProgram = program;
         this.drawPrimitive = gl.TRIANGLES;
         this.currentVertexArray = vertexArray;
-        // this.currentTransformFeedback = null;
         this.appState = appState;
 
         this.uniformIndices = {};
@@ -55,10 +54,10 @@ export class DrawCall
         this.numElements = new Int32Array(1);
         this.numInstances = new Int32Array(1);
 
-        if (this.currentVertexArray)
+        if (vertexArray)
         {
-            this.numElements[0] = this.currentVertexArray.numElements;
-            this.numInstances[0] = this.currentVertexArray.numInstances;
+            this.numElements[0] = vertexArray.numElements;
+            this.numInstances[0] = vertexArray.numInstances;
         }
 
         this.numDraws = 1;
@@ -71,15 +70,6 @@ export class DrawCall
         return this;
     }
 
-    /*
-    transformFeedback(transformFeedback)
-    {
-        this.currentTransformFeedback = transformFeedback;
-
-        return this;
-    }
-    */
-
    uniform (name: string, value): DrawCall
    {
         let index = this.uniformIndices[name];
@@ -87,6 +77,7 @@ export class DrawCall
         if (index === undefined)
         {
             index = this.uniformCount++;
+
             this.uniformIndices[name] = index;
             this.uniformNames[index] = name;
         }
@@ -96,8 +87,7 @@ export class DrawCall
         return this;
     }
 
-    /*
-    uniformBlock (name: string, buffer)
+    uniformBlock (name: string, buffer: UniformBuffer): DrawCall
     {
         const base = this.currentProgram.uniformBlocks[name];
 
@@ -105,7 +95,6 @@ export class DrawCall
 
         return this;
     }
-    */
 
     texture (name: string, texture: Texture): DrawCall
     {
@@ -116,7 +105,7 @@ export class DrawCall
         return this;
     }
 
-    drawRanges (...counts): DrawCall
+    drawRanges (...counts: number[]): DrawCall
     {
         this.numDraws = counts.length;
 
@@ -191,19 +180,6 @@ export class DrawCall
             textures[tIndex].bind(tIndex);
         }
 
-        /*
-        if (this.currentTransformFeedback)
-        {
-            this.currentTransformFeedback.bind();
-            this.gl.beginTransformFeedback(this.drawPrimitive);
-        }
-        else if (this.appState.transformFeedback)
-        {
-            this.gl.bindTransformFeedback(GL.TRANSFORM_FEEDBACK, null);
-            this.appState.transformFeedback = null;
-        }
-        */
-
         if (appState.multiDrawInstanced)
         {
             const ext = appState.extensions.multiDrawInstanced;
@@ -231,13 +207,6 @@ export class DrawCall
                 gl.drawArraysInstanced(drawPrimitive, offsets[i], numElements[i], numInstances[i]);
             }
         }
-
-        /*
-        if (this.currentTransformFeedback)
-        {
-            this.gl.endTransformFeedback();
-        }
-        */
 
         return this;
     }
