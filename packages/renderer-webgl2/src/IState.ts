@@ -1,5 +1,6 @@
 import { Framebuffer } from './Framebuffer';
 import { Texture } from './Texture';
+import { UniformBuffer } from './UniformBuffer';
 
 export interface IState
 {
@@ -8,7 +9,7 @@ export interface IState
     transformFeedback: WebGLTransformFeedback;
     activeTexture: number;
     textures: Texture[];
-    uniformBuffers: WebGLBuffer[];
+    uniformBuffers: UniformBuffer[];
     freeUniformBufferBases: [];
     drawFramebuffer: Framebuffer;
     readFramebuffer: Framebuffer;
