@@ -5,7 +5,6 @@ export class DrawCall {
         this.currentProgram = program;
         this.drawPrimitive = gl.TRIANGLES;
         this.currentVertexArray = vertexArray;
-        // this.currentTransformFeedback = null;
         this.appState = appState;
         this.uniformIndices = {};
         this.uniformNames = new Array(appState.maxUniforms);
@@ -19,9 +18,9 @@ export class DrawCall {
         this.offsets = new Int32Array(1);
         this.numElements = new Int32Array(1);
         this.numInstances = new Int32Array(1);
-        if (this.currentVertexArray) {
-            this.numElements[0] = this.currentVertexArray.numElements;
-            this.numInstances[0] = this.currentVertexArray.numInstances;
+        if (vertexArray) {
+            this.numElements[0] = vertexArray.numElements;
+            this.numInstances[0] = vertexArray.numInstances;
         }
         this.numDraws = 1;
     }
@@ -29,14 +28,6 @@ export class DrawCall {
         this.drawPrimitive = primitive;
         return this;
     }
-    /*
-    transformFeedback(transformFeedback)
-    {
-        this.currentTransformFeedback = transformFeedback;
-
-        return this;
-    }
-    */
     uniform(name, value) {
         let index = this.uniformIndices[name];
         if (index === undefined) {
@@ -47,16 +38,11 @@ export class DrawCall {
         this.uniformValues[index] = value;
         return this;
     }
-    /*
-    uniformBlock (name: string, buffer)
-    {
+    uniformBlock(name, buffer) {
         const base = this.currentProgram.uniformBlocks[name];
-
         this.uniformBuffers[base] = buffer;
-
         return this;
     }
-    */
     texture(name, texture) {
         const unit = this.currentProgram.samplers[name];
         this.textures[unit] = texture;
@@ -111,18 +97,6 @@ export class DrawCall {
         for (let tIndex = 0; tIndex < textureCount; tIndex++) {
             textures[tIndex].bind(tIndex);
         }
-        /*
-        if (this.currentTransformFeedback)
-        {
-            this.currentTransformFeedback.bind();
-            this.gl.beginTransformFeedback(this.drawPrimitive);
-        }
-        else if (this.appState.transformFeedback)
-        {
-            this.gl.bindTransformFeedback(GL.TRANSFORM_FEEDBACK, null);
-            this.appState.transformFeedback = null;
-        }
-        */
         if (appState.multiDrawInstanced) {
             const ext = appState.extensions.multiDrawInstanced;
             if (indexed) {
@@ -142,12 +116,6 @@ export class DrawCall {
                 gl.drawArraysInstanced(drawPrimitive, offsets[i], numElements[i], numInstances[i]);
             }
         }
-        /*
-        if (this.currentTransformFeedback)
-        {
-            this.gl.endTransformFeedback();
-        }
-        */
         return this;
     }
 }

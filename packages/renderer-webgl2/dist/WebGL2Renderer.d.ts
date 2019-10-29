@@ -1,4 +1,5 @@
 import { DrawCall } from './DrawCall';
+import { Framebuffer } from './Framebuffer';
 import { IState } from './IState';
 import { ITexture } from './ITexture';
 import { IViewport } from './IViewport';
@@ -7,6 +8,7 @@ import { Query } from './Query';
 import { Renderbuffer } from './Renderbuffer';
 import { Shader } from './Shader';
 import { Texture } from './Texture';
+import { UniformBuffer } from './UniformBuffer';
 import { VertexArray } from './VertexArray';
 import { VertexBuffer } from './VertexBuffer';
 export declare class WebGL2Renderer {
@@ -17,7 +19,6 @@ export declare class WebGL2Renderer {
     state: IState;
     viewport: IViewport;
     currentDrawCalls: number;
-    emptyFragmentShader: any;
     clearBits: number;
     contextLostExt: any;
     contextRestoredHandler: any;
@@ -28,11 +29,11 @@ export declare class WebGL2Renderer {
     onContextRestored(callback: () => void): WebGL2Renderer;
     initExtensions(): void;
     setViewport(x: number, y: number, width: number, height: number): WebGL2Renderer;
-    defaultViewport(): WebGL2Renderer;
+    setDefaultViewport(): WebGL2Renderer;
     resize(width: number, height: number): WebGL2Renderer;
-    colorMask(r: boolean, g: boolean, b: boolean, a: boolean): WebGL2Renderer;
-    clearColor(r: number, g: number, b: number, a: number): WebGL2Renderer;
-    clearMask(mask: GLenum): WebGL2Renderer;
+    setColorMask(r: GLboolean, g: GLboolean, b: GLboolean, a: GLboolean): WebGL2Renderer;
+    setClearColor(r: GLclampf, g: GLclampf, b: GLclampf, a: GLclampf): WebGL2Renderer;
+    setClearMask(mask: GLenum): WebGL2Renderer;
     clear(): WebGL2Renderer;
     createProgram(vsSource: string | Shader, fsSource: string | Shader): Program;
     createVertexArray(): VertexArray;
@@ -40,7 +41,9 @@ export declare class WebGL2Renderer {
     createMatrixBuffer(type: GLenum, data: ArrayBufferView, usage?: GLenum): VertexBuffer;
     createInterleavedBuffer(bytesPerVertex: number, data: ArrayBufferView | number, usage?: GLenum): VertexBuffer;
     createIndexBuffer(type: GLenum, itemSize: number, data: ArrayBufferView, usage?: GLenum): VertexBuffer;
+    createUniformBuffer(layout: GLenum[], usage?: GLenum): UniformBuffer;
     createDrawCall(program: Program, vertexArray: VertexArray): DrawCall;
+    createFramebuffer(): Framebuffer;
     createQuery(target: GLenum): Query;
     createRenderbuffer(width: number, height: number, internalFormat: GLenum, samples?: number): Renderbuffer;
     createEmptyTexture2D(width: number, height: number, options?: ITexture): Texture;

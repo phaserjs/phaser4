@@ -1,0 +1,1 @@
+//# sourceMappingURL=IUniformSize.js.map

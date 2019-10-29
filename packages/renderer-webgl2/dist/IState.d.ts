@@ -1,14 +1,16 @@
+import { Framebuffer } from './Framebuffer';
 import { Texture } from './Texture';
+import { UniformBuffer } from './UniformBuffer';
 export interface IState {
     program: WebGLProgram;
     vertexArray: WebGLVertexArrayObject;
     transformFeedback: WebGLTransformFeedback;
     activeTexture: number;
     textures: Texture[];
-    uniformBuffers: WebGLBuffer[];
+    uniformBuffers: UniformBuffer[];
     freeUniformBufferBases: [];
-    drawFramebuffer: WebGLFramebuffer;
-    readFramebuffer: WebGLFramebuffer;
+    drawFramebuffer: Framebuffer;
+    readFramebuffer: Framebuffer;
     extensions: {
         debugShaders: WEBGL_debug_shaders;
         multiDrawInstanced: any;

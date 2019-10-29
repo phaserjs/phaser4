@@ -1,5 +1,6 @@
 export class Renderbuffer {
     constructor(gl, width, height, internalFormat, samples = 0) {
+        this.is3D = false;
         this.gl = gl;
         this.renderbuffer = null;
         this.width = width;

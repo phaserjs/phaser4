@@ -5,6 +5,7 @@ export declare class Renderbuffer {
     height: number;
     internalFormat: GLenum;
     samples: number;
+    readonly is3D: boolean;
     constructor(gl: WebGL2RenderingContext, width: number, height: number, internalFormat: GLenum, samples?: number);
     restore(): Renderbuffer;
     resize(width: number, height: number): Renderbuffer;

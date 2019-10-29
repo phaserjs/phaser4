@@ -1,8 +1,11 @@
+import { enableBlend, setBlendModeNormal } from './Blend';
 import { DrawCall } from './DrawCall';
+import { Framebuffer } from './Framebuffer';
 import { Program } from './Program';
 import { Query } from './Query';
 import { Renderbuffer } from './Renderbuffer';
 import { Texture } from './Texture';
+import { UniformBuffer } from './UniformBuffer';
 import { VertexArray } from './VertexArray';
 import { VertexBuffer } from './VertexBuffer';
 export class WebGL2Renderer {
@@ -26,9 +29,8 @@ export class WebGL2Renderer {
         this.width = gl.drawingBufferWidth;
         this.height = gl.drawingBufferHeight;
         this.setViewport(0, 0, this.width, this.height);
-        gl.enable(gl.BLEND);
-        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-        gl.blendEquation(gl.FUNC_ADD);
+        enableBlend(gl);
+        setBlendModeNormal(gl);
         // tslint:disable-next-line: no-bitwise
         this.clearBits = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT;
         this.contextLostExt = null;
@@ -91,16 +93,18 @@ export class WebGL2Renderer {
     }
     initExtensions() {
         const gl = this.gl;
-        gl.getExtension('EXT_color_buffer_float');
         gl.getExtension('OES_texture_float_linear');
-        gl.getExtension('WEBGL_compressed_texture_s3tc');
-        gl.getExtension('WEBGL_compressed_texture_s3tc_srgb');
-        gl.getExtension('WEBGL_compressed_texture_etc');
-        gl.getExtension('WEBGL_compressed_texture_astc');
-        gl.getExtension('WEBGL_compressed_texture_pvrtc');
-        gl.getExtension('EXT_disjoint_timer_query_webgl2');
-        gl.getExtension('EXT_disjoint_timer_query');
+        gl.getExtension('EXT_color_buffer_float');
         gl.getExtension('EXT_texture_filter_anisotropic');
+        const compressed = 'WEBGL_compressed_texture_';
+        gl.getExtension(compressed + 's3tc');
+        gl.getExtension(compressed + 's3tc_srgb');
+        gl.getExtension(compressed + 'etc');
+        gl.getExtension(compressed + 'astc');
+        gl.getExtension(compressed + 'pvrtc');
+        const timer = 'EXT_disjoint_timer_query';
+        gl.getExtension(timer);
+        gl.getExtension(timer + '_webgl2');
         this.contextLostExt = gl.getExtension('WEBGL_lose_context');
         // Draft extensions
         gl.getExtension('KHR_parallel_shader_compile');
@@ -116,7 +120,7 @@ export class WebGL2Renderer {
         }
         return this;
     }
-    defaultViewport() {
+    setDefaultViewport() {
         this.setViewport(0, 0, this.width, this.height);
         return this;
     }
@@ -128,15 +132,15 @@ export class WebGL2Renderer {
         this.setViewport(0, 0, this.width, this.height);
         return this;
     }
-    colorMask(r, g, b, a) {
+    setColorMask(r, g, b, a) {
         this.gl.colorMask(r, g, b, a);
         return this;
     }
-    clearColor(r, g, b, a) {
+    setClearColor(r, g, b, a) {
         this.gl.clearColor(r, g, b, a);
         return this;
     }
-    clearMask(mask) {
+    setClearMask(mask) {
         this.clearBits = mask;
         return this;
     }
@@ -164,13 +168,15 @@ export class WebGL2Renderer {
     createIndexBuffer(type, itemSize, data, usage = this.gl.STATIC_DRAW) {
         return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage, true);
     }
+    createUniformBuffer(layout, usage = this.gl.DYNAMIC_DRAW) {
+        return new UniformBuffer(this.gl, this.state, layout, usage);
+    }
     createDrawCall(program, vertexArray) {
         return new DrawCall(this.gl, this.state, program, vertexArray);
     }
-    // createFramebuffer (): Framebuffer
-    // {
-    //     return new Framebuffer(this.gl, this.state);
-    // }
+    createFramebuffer() {
+        return new Framebuffer(this.gl, this.state);
+    }
     createQuery(target) {
         return new Query(this.gl, target);
     }
