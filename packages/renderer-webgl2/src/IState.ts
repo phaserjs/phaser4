@@ -1,3 +1,4 @@
+import { Framebuffer } from './Framebuffer';
 import { Texture } from './Texture';
 
 export interface IState
@@ -9,8 +10,8 @@ export interface IState
     textures: Texture[];
     uniformBuffers: WebGLBuffer[];
     freeUniformBufferBases: [];
-    drawFramebuffer: WebGLFramebuffer;
-    readFramebuffer: WebGLFramebuffer;
+    drawFramebuffer: Framebuffer;
+    readFramebuffer: Framebuffer;
     extensions: {
         debugShaders: WEBGL_debug_shaders;
         multiDrawInstanced: any;

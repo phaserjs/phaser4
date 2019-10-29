@@ -6,6 +6,7 @@ export class Renderbuffer
     height: number;
     internalFormat: GLenum;
     samples: number;
+    readonly is3D: boolean = false;
 
     constructor (gl: WebGL2RenderingContext, width: number, height: number, internalFormat: GLenum, samples = 0)
     {

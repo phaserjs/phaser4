@@ -1,5 +1,5 @@
-import { IState } from './IState';
 import { GetTypeSize } from './GetTypeSize';
+import { IState } from './IState';
 
 export class VertexBuffer
 {

@@ -49,9 +49,8 @@ export class WebGL2Renderer
 
         this.setViewport(0, 0, this.width, this.height);
 
-        gl.enable(gl.BLEND);
-        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-        gl.blendEquation(gl.FUNC_ADD);
+        this.setBlend();
+        this.setBlendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA, gl.FUNC_ADD);
 
         // tslint:disable-next-line: no-bitwise
         this.clearBits = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT;
@@ -175,7 +174,7 @@ export class WebGL2Renderer
         return this;
     }
 
-    defaultViewport (): WebGL2Renderer
+    setDefaultViewport (): WebGL2Renderer
     {
         this.setViewport(0, 0, this.width, this.height);
 
@@ -195,21 +194,21 @@ export class WebGL2Renderer
         return this;
     }
 
-    colorMask (r: boolean, g: boolean, b: boolean, a: boolean): WebGL2Renderer
+    setColorMask (r: boolean, g: boolean, b: boolean, a: boolean): WebGL2Renderer
     {
         this.gl.colorMask(r, g, b, a);
 
         return this;
     }
 
-    clearColor (r: number, g: number, b: number, a: number): WebGL2Renderer
+    setClearColor (r: number, g: number, b: number, a: number): WebGL2Renderer
     {
         this.gl.clearColor(r, g, b, a);
 
         return this;
     }
 
-    clearMask (mask: GLenum): WebGL2Renderer
+    setClearMask (mask: GLenum): WebGL2Renderer
     {
         this.clearBits = mask;
 
@@ -219,6 +218,36 @@ export class WebGL2Renderer
     clear (): WebGL2Renderer
     {
         this.gl.clear(this.clearBits);
+
+        return this;
+    }
+
+    setBlend (enable: boolean = true): WebGL2Renderer
+    {
+        const gl = this.gl;
+
+        if (enable)
+        {
+            gl.enable(gl.BLEND);
+        }
+        else
+        {
+            gl.disable(gl.BLEND);
+        }
+
+        return this;
+    }
+
+    setBlendFunc (sfactor: GLenum, dfactor: GLenum, equation?: GLenum): WebGL2Renderer
+    {
+        const gl = this.gl;
+
+        gl.blendFunc(sfactor, dfactor);
+
+        if (equation)
+        {
+            gl.blendEquation(equation);
+        }
 
         return this;
     }
