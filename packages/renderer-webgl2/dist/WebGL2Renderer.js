@@ -148,6 +148,32 @@ export class WebGL2Renderer {
         this.gl.clear(this.clearBits);
         return this;
     }
+    getX(x) {
+        return x / this.width * 2 - 1;
+    }
+    getY(y) {
+        return y / this.height * -2 + 1;
+    }
+    getXY(x, y) {
+        return {
+            x: x / this.width * 2 - 1,
+            y: y / this.height * -2 + 1
+        };
+    }
+    getQuadPosition(x, y, width, height) {
+        const TL = this.getXY(x, y);
+        const TR = this.getXY(x + width, y);
+        const BL = this.getXY(x, y + height);
+        const BR = this.getXY(x + width, y + height);
+        return new Float32Array([
+            TL.x, TL.y,
+            TR.x, TR.y,
+            BL.x, BL.y,
+            BL.x, BL.y,
+            TR.x, TR.y,
+            BR.x, BR.y
+        ]);
+    }
     createProgram(vsSource, fsSource) {
         const program = new Program(this.gl, this.state, vsSource, fsSource);
         program.link().checkLinkage();

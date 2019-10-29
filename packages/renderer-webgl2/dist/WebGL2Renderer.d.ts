@@ -35,6 +35,13 @@ export declare class WebGL2Renderer {
     setClearColor(r: GLclampf, g: GLclampf, b: GLclampf, a: GLclampf): WebGL2Renderer;
     setClearMask(mask: GLenum): WebGL2Renderer;
     clear(): WebGL2Renderer;
+    getX(x: number): number;
+    getY(y: number): number;
+    getXY(x: number, y: number): {
+        x: number;
+        y: number;
+    };
+    getQuadPosition(x: number, y: number, width: number, height: number): Float32Array;
     createProgram(vsSource: string | Shader, fsSource: string | Shader): Program;
     createVertexArray(): VertexArray;
     createVertexBuffer(type: GLenum, itemSize: number, data: ArrayBufferView | number, usage?: GLenum): VertexBuffer;
