@@ -42,6 +42,12 @@ export class WebGL2Renderer
         this.gl = gl;
         this.canvas = canvas;
 
+        gl.cullFace(gl.BACK);
+        gl.frontFace(gl.CCW);
+        gl.enable(gl.DEPTH_TEST);
+        gl.enable(gl.CULL_FACE);
+        gl.depthFunc(gl.LEQUAL);
+
         this.setState();
         this.initExtensions();
 
