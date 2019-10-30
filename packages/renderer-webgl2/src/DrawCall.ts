@@ -70,8 +70,8 @@ export class DrawCall
         return this;
     }
 
-   uniform (name: string, value): DrawCall
-   {
+    uniform (name: string, value): DrawCall
+    {
         let index = this.uniformIndices[name];
 
         if (index === undefined)
