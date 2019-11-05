@@ -127,7 +127,7 @@ export class Texture
         this.baseLevel = baseLevel;
         this.maxLevel = maxLevel;
 
-        this.maxAnisotropy = Math.min(maxAnisotropy, appState.maxTextureUnits);
+        this.maxAnisotropy = Math.min(maxAnisotropy, appState.maxTextureAnisotropy);
         this.flipY = flipY;
         this.premultiplyAlpha = premultiplyAlpha;
 
@@ -213,7 +213,7 @@ export class Texture
         
         if (this.maxAnisotropy > 1)
         {
-            gl.texParameteri(binding, gl[0x84FE], this.maxAnisotropy);
+            gl.texParameteri(binding, this.appState.textureAnisotropy.TEXTURE_MAX_ANISOTROPY_EXT, this.maxAnisotropy);
         }
 
         let levels: number = 1;
