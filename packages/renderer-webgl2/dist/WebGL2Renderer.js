@@ -69,7 +69,7 @@ export class WebGL2Renderer {
             maxUniformBuffers,
             maxUniforms: Math.min(gl.getParameter(gl.MAX_VERTEX_UNIFORM_VECTORS), gl.getParameter(gl.MAX_FRAGMENT_UNIFORM_VECTORS)),
             textureAnisotropy,
-            maxTextureAnisotropy: (textureAnisotropy) ? gl.getParameter(0x84FF) : 1,
+            maxTextureAnisotropy: (textureAnisotropy) ? gl.getParameter(textureAnisotropy.MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 1,
             samples: gl.getParameter(gl.SAMPLES),
             parallelShaderCompile: Boolean(gl.getExtension('KHR_parallel_shader_compile')),
             multiDrawInstanced: Boolean(gl.getExtension('WEBGL_multi_draw_instanced'))
@@ -137,7 +137,7 @@ export class WebGL2Renderer {
         this.setViewport(0, 0, this.width, this.height);
         return this;
     }
-    setDepthTest(value) {
+    setDepthTest(value = true) {
         const gl = this.gl;
         if (value) {
             gl.enable(gl.DEPTH_TEST);

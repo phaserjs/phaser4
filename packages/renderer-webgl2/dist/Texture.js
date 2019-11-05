@@ -47,7 +47,7 @@ export class Texture {
         this.maxLOD = maxLOD;
         this.baseLevel = baseLevel;
         this.maxLevel = maxLevel;
-        this.maxAnisotropy = Math.min(maxAnisotropy, appState.maxTextureUnits);
+        this.maxAnisotropy = Math.min(maxAnisotropy, appState.maxTextureAnisotropy);
         this.flipY = flipY;
         this.premultiplyAlpha = premultiplyAlpha;
         this.mipmaps = (minFilter === gl.LINEAR_MIPMAP_NEAREST || minFilter === gl.LINEAR_MIPMAP_LINEAR);
@@ -102,7 +102,7 @@ export class Texture {
             gl.texParameteri(binding, gl.TEXTURE_MAX_LEVEL, this.maxLevel);
         }
         if (this.maxAnisotropy > 1) {
-            gl.texParameteri(binding, gl[0x84FE], this.maxAnisotropy);
+            gl.texParameteri(binding, this.appState.textureAnisotropy.TEXTURE_MAX_ANISOTROPY_EXT, this.maxAnisotropy);
         }
         let levels = 1;
         if (this.is3D) {

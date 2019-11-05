@@ -31,7 +31,7 @@ export declare class WebGL2Renderer {
     setViewport(x: number, y: number, width: number, height: number): WebGL2Renderer;
     setDefaultViewport(): WebGL2Renderer;
     resize(width: number, height: number): WebGL2Renderer;
-    setDepthTest(value: boolean): WebGL2Renderer;
+    setDepthTest(value?: boolean): WebGL2Renderer;
     setColorMask(r: GLboolean, g: GLboolean, b: GLboolean, a: GLboolean): WebGL2Renderer;
     setClearColor(r: GLclampf, g: GLclampf, b: GLclampf, a: GLclampf): WebGL2Renderer;
     setClearMask(mask: GLenum): WebGL2Renderer;
