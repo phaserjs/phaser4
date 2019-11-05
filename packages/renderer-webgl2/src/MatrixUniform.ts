@@ -18,7 +18,7 @@ export class MatrixUniform
 
         const uniformData = GetUniform(gl, info.type);
 
-        this.glFunc = uniformData.glFunc;
+        this.glFunc = uniformData.glFunc.bind(gl);
 
         this.cache = uniformData.cacheClass(uniformData.size * count);
     }
