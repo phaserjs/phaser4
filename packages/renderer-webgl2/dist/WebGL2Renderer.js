@@ -31,14 +31,15 @@ export class WebGL2Renderer {
         this.setViewport(0, 0, this.width, this.height);
         enableBlend(gl);
         setBlendModeNormal(gl);
+        this.setDepthTest(false);
         // tslint:disable-next-line: no-bitwise
         this.clearBits = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT;
         this.contextLostExt = null;
         this.contextRestoredHandler = null;
-        this.canvas.addEventListener('webglcontextlost', (e) => {
+        canvas.addEventListener('webglcontextlost', (e) => {
             e.preventDefault();
         });
-        this.canvas.addEventListener('webglcontextrestored', () => {
+        canvas.addEventListener('webglcontextrestored', () => {
             this.initExtensions();
             if (this.contextRestoredHandler) {
                 this.contextRestoredHandler();
@@ -93,21 +94,25 @@ export class WebGL2Renderer {
     }
     initExtensions() {
         const gl = this.gl;
-        gl.getExtension('OES_texture_float_linear');
-        gl.getExtension('EXT_color_buffer_float');
-        gl.getExtension('EXT_texture_filter_anisotropic');
         const compressed = 'WEBGL_compressed_texture_';
-        gl.getExtension(compressed + 's3tc');
-        gl.getExtension(compressed + 's3tc_srgb');
-        gl.getExtension(compressed + 'etc');
-        gl.getExtension(compressed + 'astc');
-        gl.getExtension(compressed + 'pvrtc');
         const timer = 'EXT_disjoint_timer_query';
-        gl.getExtension(timer);
-        gl.getExtension(timer + '_webgl2');
+        const extensions = [
+            'OES_texture_float_linear',
+            'EXT_color_buffer_float',
+            'EXT_texture_filter_anisotropic',
+            compressed + 's3tc',
+            compressed + 's3tc_srgb',
+            compressed + 'etc',
+            compressed + 'astc',
+            compressed + 'pvrtc',
+            timer,
+            timer + '_webgl2',
+            'KHR_parallel_shader_compile' // draft extension
+        ];
+        extensions.forEach((ext) => {
+            gl.getExtension(ext);
+        });
         this.contextLostExt = gl.getExtension('WEBGL_lose_context');
-        // Draft extensions
-        gl.getExtension('KHR_parallel_shader_compile');
     }
     setViewport(x, y, width, height) {
         const viewport = this.viewport;
@@ -130,6 +135,16 @@ export class WebGL2Renderer {
         this.width = this.gl.drawingBufferWidth;
         this.height = this.gl.drawingBufferHeight;
         this.setViewport(0, 0, this.width, this.height);
+        return this;
+    }
+    setDepthTest(value) {
+        const gl = this.gl;
+        if (value) {
+            gl.enable(gl.DEPTH_TEST);
+        }
+        else {
+            gl.disable(gl.DEPTH_TEST);
+        }
         return this;
     }
     setColorMask(r, g, b, a) {

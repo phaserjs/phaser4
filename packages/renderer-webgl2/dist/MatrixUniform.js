@@ -5,7 +5,7 @@ export class MatrixUniform {
         this.handle = handle;
         this.count = count;
         const uniformData = GetUniform(gl, info.type);
-        this.glFunc = uniformData.glFunc;
+        this.glFunc = uniformData.glFunc.bind(gl);
         this.cache = uniformData.cacheClass(uniformData.size * count);
     }
     set(value) {
