@@ -16,4 +16,4 @@ out/
 
 # Because of npm link:
 
-package-lock.json
+# package-lock.json
