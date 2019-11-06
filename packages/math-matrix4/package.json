@@ -1,7 +1,7 @@
 {
-  "name": "@phaserjs/package",
+  "name": "@phaserjs/math-matrix4",
   "version": "0.0.0",
-  "description": "A template Phaser.Namespace package",
+  "description": "Phaser.Math.Matrix4",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "publishConfig": {
