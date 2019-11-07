@@ -1,68 +1,29 @@
-import { IMatrix4 } from './IMatrix4';
 import { Matrix4 } from './Matrix4';
 
-export function Multiply (a: Matrix4, b: IMatrix4, out: Matrix4 = new Matrix4()): Matrix4
+export function Multiply (a: Matrix4, b: Matrix4): Matrix4
 {
-    const a00: number = a.m00;
-    const a01: number = a.m01;
-    const a02: number = a.m02;
-    const a03: number = a.m03;
-
-    const a10: number = a.m10;
-    const a11: number = a.m11;
-    const a12: number = a.m12;
-    const a13: number = a.m13;
-
-    const a20: number = a.m20;
-    const a21: number = a.m21;
-    const a22: number = a.m22;
-    const a23: number = a.m23;
-
-    const a30: number = a.m30;
-    const a31: number = a.m31;
-    const a32: number = a.m32;
-    const a33: number = a.m33;
+    const [ a00, a01, a02, a03, a10, a11, a12, a13, a20, a21, a22, a23, a30, a31, a32, a33 ] = a.data;
+    const [ b00, b01, b02, b03, b10, b11, b12, b13, b20, b21, b22, b23, b30, b31, b32, b33 ] = b.data;
     
-    //  Cache the current line
-    let b0: number = b.m00;
-    let b1: number = b.m01;
-    let b2: number = b.m02;
-    let b3: number = b.m03;
+    const m00 = b00 * a00 + b01 * a10 + b02 * a20 + b03 * a30;
+    const m01 = b00 * a01 + b01 * a11 + b02 * a21 + b03 * a31;
+    const m02 = b00 * a02 + b01 * a12 + b02 * a22 + b03 * a32;
+    const m03 = b00 * a03 + b01 * a13 + b02 * a23 + b03 * a33;
 
-    out.m00 = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-    out.m01 = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-    out.m02 = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-    out.m03 = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-  
-    b0 = b.m10;
-    b1 = b.m11;
-    b2 = b.m12;
-    b3 = b.m13;
+    const m10 = b10 * a00 + b11 * a10 + b12 * a20 + b13 * a30;
+    const m11 = b10 * a01 + b11 * a11 + b12 * a21 + b13 * a31;
+    const m12 = b10 * a02 + b11 * a12 + b12 * a22 + b13 * a32;
+    const m13 = b10 * a03 + b11 * a13 + b12 * a23 + b13 * a33;
 
-    out.m10 = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-    out.m11 = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-    out.m12 = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-    out.m13 = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-  
-    b0 = b.m20;
-    b1 = b.m21;
-    b2 = b.m22;
-    b3 = b.m23;
+    const m20 = b20 * a00 + b21 * a10 + b22 * a20 + b23 * a30;
+    const m21 = b20 * a01 + b21 * a11 + b22 * a21 + b23 * a31;
+    const m22 = b20 * a02 + b21 * a12 + b22 * a22 + b23 * a32;
+    const m23 = b20 * a03 + b21 * a13 + b22 * a23 + b23 * a33;
 
-    out.m20 = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-    out.m21 = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-    out.m22 = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-    out.m23 = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-  
-    b0 = b.m30;
-    b1 = b.m31;
-    b2 = b.m32;
-    b3 = b.m33;
+    const m30 = b30 * a00 + b31 * a10 + b32 * a20 + b33 * a30;
+    const m31 = b30 * a01 + b31 * a11 + b32 * a21 + b33 * a31;
+    const m32 = b30 * a02 + b31 * a12 + b32 * a22 + b33 * a32;
+    const m33 = b30 * a03 + b31 * a13 + b32 * a23 + b33 * a33;
 
-    out.m30 = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-    out.m31 = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-    out.m32 = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-    out.m33 = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-
-    return out;
+    return new Matrix4(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33);
 }

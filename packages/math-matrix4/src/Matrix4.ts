@@ -62,4 +62,9 @@ export class Matrix4
 
         return this;
     }
+
+    get data (): number[]
+    {
+        return [ this.m00, this.m01, this.m02, this.m03, this.m10, this.m11, this.m12, this.m13, this.m20, this.m21, this.m22, this.m23, this.m30, this.m31, this.m32, this.m33 ];
+    }
 }
