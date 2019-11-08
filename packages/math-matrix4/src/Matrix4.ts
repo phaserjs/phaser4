@@ -235,6 +235,25 @@ export class Matrix4
         return [ this.m00, this.m01, this.m02, this.m03, this.m10, this.m11, this.m12, this.m13, this.m20, this.m21, this.m22, this.m23, this.m30, this.m31, this.m32, this.m33 ];
     }
 
+    /**
+     * Sets the values of this Matrix4 based on the given array, or array-like object, such as a Float32.
+     * 
+     * The source must have 16 elements, starting from index 0 through to index 15.
+     *
+     * @param {number[]} src - The source array to copy the values from.
+     * @returns {Matrix4}
+     * @memberof Matrix4
+     */
+    fromArray (src: number[]): Matrix4
+    {
+        return this.set(
+            src[0], src[1], src[2], src[3],
+            src[4], src[5], src[6], src[7],
+            src[8], src[9], src[10], src[11],
+            src[12], src[13], src[14], src[15]
+        );
+    }
+
     [Symbol.iterator] ()
     {
         const data = this.getArray();
