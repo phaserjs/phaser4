@@ -22,5 +22,8 @@
   "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
   "dependencies": {
     "typescript": "^3.7.2"
+  },
+  "devDependencies": {
+    "@phaserjs/math-matrix4": "0.0.3"
   }
 }

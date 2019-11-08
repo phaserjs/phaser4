@@ -1,8 +1,8 @@
-import { Matrix4 } from './Matrix4';
+import { Matrix4 } from '@phaserjs/math-matrix4';
 
 export function Perspective (fovy: number, aspect: number, near: number, far: number): Matrix4
 {
-    const f = 1 / Math.tan(fovy / 2);
+    const f: number = 1 / Math.tan(fovy / 2);
 
     let m22: number = -1;
     let m32: number = -2 * near;

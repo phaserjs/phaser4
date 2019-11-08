@@ -1,4 +1,4 @@
-import { IMatrix4 } from './IMatrix4';
+import { IMatrix4 } from '@phaserjs/math-matrix4';
 
 export function Frobenius (src: IMatrix4): number
 {

@@ -1,5 +1,4 @@
-import { IMatrix4 } from './IMatrix4';
-import { Matrix4 } from './Matrix4';
+import { IMatrix4, Matrix4 } from '@phaserjs/math-matrix4';
 
 export function Clone (src: IMatrix4): Matrix4
 {

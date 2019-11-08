@@ -1,6 +1,6 @@
-import { Matrix4 } from './Matrix4';
+import { IMatrix4, Matrix4 } from '@phaserjs/math-matrix4';
 
-export function MultiplyScalar (src: Matrix4, amount: number): Matrix4
+export function MultiplyScalar (src: IMatrix4, amount: number): Matrix4
 {
     const { m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33 } = src;
     

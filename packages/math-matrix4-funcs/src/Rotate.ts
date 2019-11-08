@@ -1,5 +1,4 @@
-import { IMatrix4 } from './IMatrix4';
-import { Matrix4 } from './Matrix4';
+import { IMatrix4, Matrix4 } from '@phaserjs/math-matrix4';
 
 export function Rotate (src: IMatrix4, angle: number, axis: { x: number, y: number, z: number }, epsilon: number = 0.000001): Matrix4 | null
 {
@@ -24,7 +23,7 @@ export function Rotate (src: IMatrix4, angle: number, axis: { x: number, y: numb
 
     const { m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33 } = src;
 
-    // Construct the elements of the rotation matrix
+    //  Construct the elements of the rotation matrix
     const b00: number = x * x * t + c;
     const b01: number = y * x * t + z * s;
     const b02: number = z * x * t - y * s;

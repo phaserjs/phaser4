@@ -1,9 +1,9 @@
-import { Matrix4 } from './Matrix4';
+import { IMatrix4, Matrix4 } from '@phaserjs/math-matrix4';
 
-export function Subtract (a: Matrix4, b: Matrix4): Matrix4
+export function Subtract (a: IMatrix4, b: IMatrix4): Matrix4
 {
-    const [ a00, a01, a02, a03, a10, a11, a12, a13, a20, a21, a22, a23, a30, a31, a32, a33 ] = a.data;
-    const [ b00, b01, b02, b03, b10, b11, b12, b13, b20, b21, b22, b23, b30, b31, b32, b33 ] = b.data;
+    const { m00: a00, m01: a01, m02: a02, m03: a03, m10: a10, m11: a11, m12: a12, m13: a13, m20: a20, m21: a21, m22: a22, m23: a23, m30: a30, m31: a31, m32: a32, m33: a33 } = a;
+    const { m00: b00, m01: b01, m02: b02, m03: b03, m10: b10, m11: b11, m12: b12, m13: b13, m20: b20, m21: b21, m22: b22, m23: b23, m30: b30, m31: b31, m32: b32, m33: b33 } = b;
     
     const m00 = a00 - b00;
     const m01 = a01 - b01;

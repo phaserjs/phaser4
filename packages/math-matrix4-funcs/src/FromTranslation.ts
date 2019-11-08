@@ -1,4 +1,4 @@
-import { Matrix4 } from './Matrix4';
+import { Matrix4 } from '@phaserjs/math-matrix4';
 
 export function FromTranslation (x: number, y: number = 0, z: number = 0): Matrix4
 {

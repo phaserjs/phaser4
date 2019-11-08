@@ -1,4 +1,4 @@
-import { Matrix4 } from './Matrix4';
+import { Matrix4 } from '@phaserjs/math-matrix4';
 
 export function FromYRotation (angle: number): Matrix4
 {

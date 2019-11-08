@@ -1,5 +1,4 @@
-import { IMatrix4 } from './IMatrix4';
-import { Matrix4 } from './Matrix4';
+import { Matrix4 } from '@phaserjs/math-matrix4';
 
 export function FromRotation (angle: number, axis: { x: number, y: number, z: number }, epsilon: number = 0.000001): Matrix4 | null
 {

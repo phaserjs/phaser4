@@ -1,6 +1,6 @@
-import { Matrix4 } from './Matrix4';
+import { IMatrix4 } from '@phaserjs/math-matrix4';
 
-export function ExactEquals (a: Matrix4, b: Matrix4): boolean
+export function ExactEquals (a: IMatrix4, b: IMatrix4): boolean
 {
     return (
         a.m00 === b.m00 &&
