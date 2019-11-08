@@ -22,7 +22,7 @@ else
     {
         fs.emptyDirSync(dist);
 
-        const w = exec('tsc --build ' + dest + '/tsconfig.js');
+        const w = exec('tsc --build ' + dest + '/tsconfig.json');
     
         w.stdout.on('data', (data) => {
             console.log(data);
