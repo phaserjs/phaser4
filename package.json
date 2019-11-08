@@ -3,6 +3,7 @@
   "private": true,
   "description": "A fast, free and fun HTML5 Game Framework for Desktop and Mobile web browsers.",
   "scripts": {
+    "build": "node ./scripts/build.js",
     "lerna": "lerna"
   },
   "repository": {
