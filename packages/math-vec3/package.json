@@ -1,0 +1,26 @@
+{
+  "name": "@phaserjs/math-vec3",
+  "version": "0.0.0",
+  "description": "Phaser.Math.Vec3",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phaserjs/phaser4.git"
+  },
+  "author": "Richard Davey <rich@photonstorm.com> (http://www.photonstorm.com)",
+  "license": "MIT",
+  "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
+  "dependencies": {
+    "typescript": "^3.7.2"
+  }
+}
