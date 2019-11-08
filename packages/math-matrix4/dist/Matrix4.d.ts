@@ -181,6 +181,16 @@ export declare class Matrix4 {
      * @memberof Matrix4
      */
     getArray(): number[];
+    /**
+     * Sets the values of this Matrix4 based on the given array, or array-like object, such as a Float32.
+     *
+     * The source must have 16 elements, starting from index 0 through to index 15.
+     *
+     * @param {number[]} src - The source array to copy the values from.
+     * @returns {Matrix4}
+     * @memberof Matrix4
+     */
+    fromArray(src: number[]): Matrix4;
     [Symbol.iterator](): IterableIterator<number>;
 }
 //# sourceMappingURL=Matrix4.d.ts.map
