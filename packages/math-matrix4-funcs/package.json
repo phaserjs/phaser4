@@ -1,6 +1,6 @@
 {
   "name": "@phaserjs/math-matrix4-funcs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Phaser.Math.Matrix4Funcs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,6 +24,6 @@
     "typescript": "^3.7.2"
   },
   "devDependencies": {
-    "@phaserjs/math-matrix4": "^0.0.4"
+    "@phaserjs/math-matrix4": "^0.0.5"
   }
 }
