@@ -2,9 +2,9 @@ import { Matrix4 } from '@phaserjs/math-matrix4';
 
 export function Ortho (left: number, right: number, bottom: number, top: number, near: number, far: number): Matrix4
 {
-    const lr: number = 1 / (left - right);
-    const bt: number = 1 / (bottom - top);
-    const nf: number = 1 / (near - far);
+    const leftRight: number = 1 / (left - right);
+    const bottomTop: number = 1 / (bottom - top);
+    const nearFar: number = 1 / (near - far);
   
     const m00: number = -2 * lr;
     const m11: number = -2 * bt;
