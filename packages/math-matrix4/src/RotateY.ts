@@ -1,4 +1,4 @@
-import { Matrix4 } from './index';
+import { Matrix4 } from './Matrix4';
 
 //  Rotates the target Matrix4 by the angle on its y axis, then returns the target Matrix4
 

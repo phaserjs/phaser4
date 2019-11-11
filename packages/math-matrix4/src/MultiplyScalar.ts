@@ -1,4 +1,4 @@
-import { Matrix4 } from './index';
+import { Matrix4 } from './Matrix4';
 
 //  Multiplies the target Matrix4 by the given amount, then returns the target Matrix4
 

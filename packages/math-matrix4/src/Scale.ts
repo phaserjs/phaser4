@@ -1,4 +1,4 @@
-import { Matrix4 } from './index';
+import { Matrix4 } from './Matrix4';
 
 //  Scales the target Matrix4 by the x, y and z values, then returns the target Matrix4
 

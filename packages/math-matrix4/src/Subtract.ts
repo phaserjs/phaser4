@@ -1,4 +1,5 @@
-import { IMatrix4, Matrix4 } from './index';
+import { IMatrix4 } from './IMatrix4';
+import { Matrix4 } from './Matrix4';
 
 //  Subtracts the src Matrix4 from the target Matrix4 and returns the target
 

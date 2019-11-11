@@ -1,4 +1,5 @@
-import { IMatrix4, Matrix4 } from './index';
+import { IMatrix4 } from './IMatrix4';
+import { Matrix4 } from './Matrix4';
 
 //  Multiplies the target Matrix4 by the src Matrix and returns the target
 

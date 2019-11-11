@@ -3,7 +3,7 @@ import { IVec3 } from '@phaserjs/math-vec3';
 
 // Generates a matrix that makes something look at something else
 
-export function TargetTo (eye: IVec3, target: IVec3, up: IVec3, epsilon: number = 0.000001): Matrix4
+export function TargetTo (eye: IVec3, target: IVec3, up: IVec3): Matrix4
 {
     const { x: eyex, y: eyey, z: eyez } = eye;
     const { x: upx, y: upy, z: upz } = up;

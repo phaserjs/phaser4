@@ -1,4 +1,5 @@
-import { GetDeterminant, Matrix4 } from './index';
+import { GetDeterminant } from './GetDeterminant';
+import { Matrix4 } from './Matrix4';
 
 //  Inverts the target Matrix4 and then returns it
 

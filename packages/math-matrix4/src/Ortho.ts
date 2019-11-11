@@ -1,4 +1,4 @@
-import { Matrix4 } from './index';
+import { Matrix4 } from './Matrix4';
 
 //  Converts the target Matrix4 to be an orthographic projection matrix based on the given bounds, then returns the target Matrix4
 

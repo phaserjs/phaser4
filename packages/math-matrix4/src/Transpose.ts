@@ -1,4 +1,4 @@
-import { Matrix4 } from './index';
+import { Matrix4 } from './Matrix4';
 
 //  Transposes the target Matrix4 and then returns it
 
