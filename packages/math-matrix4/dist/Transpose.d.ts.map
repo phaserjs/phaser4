@@ -1,1 +1,1 @@
-{"version":3,"file":"Transpose.d.ts","sourceRoot":"","sources":["../src/Transpose.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,SAAS,CAAC;AAIlC,wBAAgB,SAAS,CAAE,MAAM,EAAE,OAAO,GAAG,OAAO,CAKnD"}
+{"version":3,"file":"Transpose.d.ts","sourceRoot":"","sources":["../src/Transpose.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,WAAW,CAAC;AAIpC,wBAAgB,SAAS,CAAE,MAAM,EAAE,OAAO,GAAG,OAAO,CAKnD"}
