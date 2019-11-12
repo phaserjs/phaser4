@@ -1,4 +1,4 @@
-import { IMatrix2D } from './IMatrix2D';
+import { IMatrix2D } from '@phaserjs/math-matrix2d';
 
 export function Determinant (src: IMatrix2D): number
 {

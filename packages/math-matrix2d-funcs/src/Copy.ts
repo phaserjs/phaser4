@@ -1,6 +1,6 @@
-import { Matrix2D } from './Matrix2D';
+import { IMatrix2D, Matrix2D } from '@phaserjs/math-matrix2d';
 
-export function Copy (src: Matrix2D, dest: Matrix2D): Matrix2D
+export function Copy (src: IMatrix2D, dest: Matrix2D): Matrix2D
 {
-    return dest.fromValues(src.a, src.b, src.c, src.d, src.tx, src.ty);
+    return dest.set(src.a, src.b, src.c, src.d, src.tx, src.ty);
 }

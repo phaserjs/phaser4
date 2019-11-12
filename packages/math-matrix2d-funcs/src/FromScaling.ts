@@ -1,6 +1,6 @@
-import { Matrix2D } from './Matrix2D';
+import { Matrix2D, Scale } from '@phaserjs/math-matrix2d';
 
 export function FromScaling (scaleX: number, scaleY: number = scaleX): Matrix2D
 {
-    return new Matrix2D(scaleX, 0, 0, scaleY);
+    return Scale(new Matrix2D(), scaleX, scaleY);
 }

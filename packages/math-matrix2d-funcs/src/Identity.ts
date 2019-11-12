@@ -1,6 +1,6 @@
-import { Matrix2D } from './Matrix2D';
+import { Matrix2D } from '@phaserjs/math-matrix2d';
 
-export function Identity (src: Matrix2D = new Matrix2D()): Matrix2D
+export function Identity (src: Matrix2D): Matrix2D
 {
-    return src.fromValues();
+    return src.identity();
 }

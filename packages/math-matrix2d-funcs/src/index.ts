@@ -1,4 +1,3 @@
-
 export * from './Add';
 export * from './Clone';
 export * from './Copy';
@@ -10,9 +9,7 @@ export * from './FromRotation';
 export * from './FromScaling';
 export * from './FromTranslation';
 export * from './Identity';
-export * from './IMatrix2D';
 export * from './Invert';
-export * from './Matrix2D';
 export * from './Multiply';
 export * from './MultiplyScalar';
 export * from './MultiplyScalarAndAdd';

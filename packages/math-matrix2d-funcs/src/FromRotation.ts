@@ -1,9 +1,6 @@
-import { Matrix2D } from './Matrix2D';
-import { Rotate } from './Rotate';
+import { Matrix2D, Rotate } from '@phaserjs/math-matrix2d';
 
 export function FromRotation (angle: number): Matrix2D
 {
-    const out: Matrix2D = new Matrix2D();
-
-    return Rotate(out, angle, out);
+    return Rotate(new Matrix2D(), angle);
 }

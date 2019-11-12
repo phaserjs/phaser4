@@ -1,13 +1,9 @@
-import { IMatrix2D } from './IMatrix2D';
-import { Matrix2D } from './Matrix2D';
+import { IMatrix2D, Matrix2D } from '@phaserjs/math-matrix2d';
 
-export function Translate (src: IMatrix2D, x: number, y: number, out: Matrix2D = new Matrix2D()): Matrix2D
+export function Translate (src: IMatrix2D, x: number, y: number): Matrix2D
 {
-    const tx = src.tx;
-    const ty = src.ty;
+    const tx = src.a * x + src.c * y + src.tx;
+    const ty = src.b * x + src.d * y + src.ty;
 
-    out.tx = src.a * x + src.c * y + tx;
-    out.ty = src.b * x + src.d * y + ty;
-
-    return out;
+    return new Matrix2D(1, 0, 0, 1, tx, ty);
 }

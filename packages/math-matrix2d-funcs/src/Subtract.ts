@@ -1,14 +1,13 @@
-import { IMatrix2D } from './IMatrix2D';
-import { Matrix2D } from './Matrix2D';
+import { IMatrix2D, Matrix2D } from '@phaserjs/math-matrix2d';
 
-export function Subtract (a: IMatrix2D, b: IMatrix2D, out: Matrix2D = new Matrix2D()): Matrix2D
+export function Subtract (a: IMatrix2D, b: IMatrix2D): Matrix2D
 {
-    out.a = a.a - b.a;
-    out.b = a.b - b.b;
-    out.c = a.c - b.c;
-    out.d = a.d - b.d;
-    out.tx = a.tx - b.tx;
-    out.ty = a.ty - b.ty;
-
-    return out;
+    return new Matrix2D(
+        a.a - b.a,
+        a.b - b.b,
+        a.c - b.c,
+        a.c - b.c,
+        a.tx - b.tx,
+        a.ty - b.ty
+    );
 }

@@ -1,6 +1,6 @@
-import { Matrix2D } from './Matrix2D';
+import { Matrix2D, Translate } from '@phaserjs/math-matrix2d';
 
 export function FromTranslation (x: number, y: number): Matrix2D
 {
-    return new Matrix2D(1, 0, 0, 1, x, y);
+    return Translate(new Matrix2D(), x, y);
 }
