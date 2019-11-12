@@ -1,6 +1,6 @@
 {
   "name": "@phaserjs/math-matrix2d-funcs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Phaser.Math.Matrix2DFuncs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
