@@ -11,15 +11,10 @@ export class Matrix2D
 
     constructor (a: number = 1, b: number = 0, c: number = 0, d: number = 1, tx: number = 0, ty: number = 0)
     {
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        this.d = d;
-        this.tx = tx;
-        this.ty = ty;
+        this.set(a, b, c, d, tx, ty);
     }
 
-    fromValues (a: number = 1, b: number = 0, c: number = 0, d: number = 1, tx: number = 0, ty: number = 0): Matrix2D
+    set (a: number = 1, b: number = 0, c: number = 0, d: number = 1, tx: number = 0, ty: number = 0): Matrix2D
     {
         this.a = a;
         this.b = b;
@@ -30,4 +25,32 @@ export class Matrix2D
 
         return this;
     }
+
+    zero (): Matrix2D
+    {
+        return this.set(0, 0, 0, 0, 0, 0);
+    }
+
+    identity (): Matrix2D
+    {
+        return this.set();
+    }
+
+    getArray (): number[]
+    {
+        return [ this.a, this.b, this.c, this.d, this.tx, this.ty ];
+    }
+
+    fromArray (src: number[]): Matrix2D
+    {
+        return this.set(src[0], src[1], src[2], src[3], src[4], src[5]);
+    }
+
+    [Symbol.iterator] ()
+    {
+        const data = this.getArray();
+
+        return data[Symbol.iterator]();
+    }
+
 }

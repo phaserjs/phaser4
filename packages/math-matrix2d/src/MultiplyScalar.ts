@@ -1,14 +1,15 @@
-import { IMatrix2D } from './IMatrix2D';
 import { Matrix2D } from './Matrix2D';
 
-export function MultiplyScalar (src: IMatrix2D, scale: number, out: Matrix2D = new Matrix2D()): Matrix2D
-{
-    out.a = src.a * scale;
-    out.b = src.b * scale;
-    out.c = src.c * scale;
-    out.d = src.d * scale;
-    out.tx = src.tx * scale;
-    out.ty = src.ty * scale;
+//  Multiplies the target Matrix by the given amount, then returns the target Matrix
 
-    return out;
+export function MultiplyScalar (target: Matrix2D, scale: number): Matrix2D
+{
+    target.a *= scale;
+    target.b *= scale;
+    target.c *= scale;
+    target.d *= scale;
+    target.tx *= scale;
+    target.ty *= scale;
+
+    return target;
 }

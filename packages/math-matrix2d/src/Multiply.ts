@@ -1,28 +1,19 @@
 import { IMatrix2D } from './IMatrix2D';
 import { Matrix2D } from './Matrix2D';
 
-export function Multiply (a: Matrix2D, b: IMatrix2D, out: Matrix2D = new Matrix2D()): Matrix2D
+//  Multiplies the target Matrix by the src Matrix and returns the target
+
+export function Multiply (target: Matrix2D, src: IMatrix2D): Matrix2D
 {
-    const a0 = a.a;
-    const b0 = a.b;
-    const c0 = a.c;
-    const d0 = a.d;
-    const tx0 = a.tx;
-    const ty0 = a.ty;
-
-    const a1 = b.a;
-    const b1 = b.b;
-    const c1 = b.c;
-    const d1 = b.d;
-    const tx1 = b.tx;
-    const ty1 = b.ty;
+    const { a: a0, b: b0, c: c0, d: d0, tx: tx0, ty: ty0 } = target;
+    const { a: a1, b: b1, c: c1, d: d1, tx: tx1, ty: ty1 } = src;
     
-    out.a = a0 * a1 + c0 * b1;
-    out.b = b0 * a1 + d0 * b1;
-    out.c = a0 * c1 + c0 * d1;
-    out.d = b0 * c1 + d0 * d1;
-    out.tx = a0 * tx1 + c0 * ty1 + tx0;
-    out.ty = b0 * tx1 + d0 * ty1 + ty0;
+    target.a = a0 * a1 + c0 * b1;
+    target.b = b0 * a1 + d0 * b1;
+    target.c = a0 * c1 + c0 * d1;
+    target.d = b0 * c1 + d0 * d1;
+    target.tx = a0 * tx1 + c0 * ty1 + tx0;
+    target.ty = b0 * tx1 + d0 * ty1 + ty0;
 
-    return out;
+    return target;
 }

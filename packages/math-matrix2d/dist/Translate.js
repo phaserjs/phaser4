@@ -1,9 +1,7 @@
-import { Matrix2D } from './Matrix2D';
-export function Translate(src, x, y, out = new Matrix2D()) {
-    const tx = src.tx;
-    const ty = src.ty;
-    out.tx = src.a * x + src.c * y + tx;
-    out.ty = src.b * x + src.d * y + ty;
-    return out;
+export function Translate(target, x, y) {
+    const { a, b, c, d, tx, ty } = target;
+    target.tx = a * x + c * y + tx;
+    target.ty = b * x + d * y + ty;
+    return target;
 }
 //# sourceMappingURL=Translate.js.map
