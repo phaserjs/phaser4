@@ -1,6 +1,6 @@
 {
   "name": "@phaserjs/math-vec2",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Phaser.Math.Vec2",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
