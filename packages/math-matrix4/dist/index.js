@@ -2,6 +2,7 @@ export * from './Add';
 export * from './Frustum';
 export * from './GetDeterminant';
 export * from './Invert';
+export * from './LoadMatrix2D';
 export * from './Matrix4';
 export * from './Multiply';
 export * from './MultiplyScalar';
