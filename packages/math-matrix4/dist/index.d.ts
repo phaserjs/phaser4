@@ -3,6 +3,7 @@ export * from './Frustum';
 export * from './GetDeterminant';
 export * from './IMatrix4';
 export * from './Invert';
+export * from './ITRS';
 export * from './LoadMatrix2D';
 export * from './Matrix4';
 export * from './Multiply';

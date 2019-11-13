@@ -11,6 +11,8 @@ export declare class Matrix2D {
     identity(): Matrix2D;
     getArray(): number[];
     fromArray(src: number[]): Matrix2D;
+    getX(x: number, y: number): number;
+    getY(x: number, y: number): number;
     [Symbol.iterator](): IterableIterator<number>;
 }
 //# sourceMappingURL=Matrix2D.d.ts.map

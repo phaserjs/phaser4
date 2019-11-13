@@ -13,7 +13,7 @@ export class Matrix2D {
         return this;
     }
     zero() {
-        return this.set(0, 0, 0, 0, 0, 0);
+        return this.set(0, 0, 0, 0);
     }
     identity() {
         return this.set();
@@ -23,6 +23,12 @@ export class Matrix2D {
     }
     fromArray(src) {
         return this.set(src[0], src[1], src[2], src[3], src[4], src[5]);
+    }
+    getX(x, y) {
+        return x * this.a + y * this.c + this.tx;
+    }
+    getY(x, y) {
+        return x * this.b + y * this.d + this.ty;
     }
     [Symbol.iterator]() {
         const data = this.getArray();
