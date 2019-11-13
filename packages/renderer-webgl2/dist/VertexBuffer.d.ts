@@ -14,7 +14,7 @@ export declare class VertexBuffer {
     integer: boolean;
     constructor(gl: WebGL2RenderingContext, appState: IState, type: GLenum, itemSize: number, data?: number | BufferSource, usage?: GLenum, indexArray?: boolean);
     restore(data?: number | BufferSource): VertexBuffer;
-    data(data: BufferSource): VertexBuffer;
+    data(data: BufferSource, byteOffset?: number): VertexBuffer;
     delete(): VertexBuffer;
 }
 //# sourceMappingURL=VertexBuffer.d.ts.map

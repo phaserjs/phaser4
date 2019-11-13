@@ -15,7 +15,7 @@ export declare class UniformBuffer {
     dirtyEnd: number;
     constructor(gl: WebGL2RenderingContext, appState: IState, layout: GLenum[], usage?: GLenum);
     restore(): UniformBuffer;
-    set(index: number, value: ArrayBufferView): UniformBuffer;
+    set(index: number, value: ArrayBufferView | ArrayLike<number>): UniformBuffer;
     update(): UniformBuffer;
     delete(): UniformBuffer;
     bind(index: GLuint): UniformBuffer;

@@ -70,7 +70,7 @@ export class VertexBuffer {
         gl.bindBuffer(binding, null);
         return this;
     }
-    data(data) {
+    data(data, byteOffset = 0) {
         const gl = this.gl;
         const appState = this.appState;
         const binding = this.binding;
@@ -79,7 +79,7 @@ export class VertexBuffer {
             appState.vertexArray = null;
         }
         gl.bindBuffer(binding, this.buffer);
-        gl.bufferSubData(binding, 0, data);
+        gl.bufferSubData(binding, byteOffset, data);
         gl.bindBuffer(binding, null);
         return this;
     }

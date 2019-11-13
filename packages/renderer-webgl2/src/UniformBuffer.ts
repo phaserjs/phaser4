@@ -99,7 +99,7 @@ export class UniformBuffer
         return this;
     }
 
-    set (index: number, value: ArrayBufferView | number[]): UniformBuffer
+    set (index: number, value: ArrayBufferView | ArrayLike<number>): UniformBuffer
     {
         const view = this.dataViews[this.types[index]];
         const offset = this.offsets[index];
