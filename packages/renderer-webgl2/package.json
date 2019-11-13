@@ -1,6 +1,6 @@
 {
   "name": "@phaserjs/renderer-webgl2",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Phaser.Renderer.WebGL2",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",

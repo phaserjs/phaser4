@@ -1,6 +1,6 @@
 {
   "name": "@phaserjs/math-matrix2d-funcs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Phaser.Math.Matrix2DFuncs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,7 +21,7 @@
   "license": "MIT",
   "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
   "dependencies": {
-    "@phaserjs/math-matrix2d": "0.0.3",
+    "@phaserjs/math-matrix2d": "^0.0.4",
     "typescript": "^3.6.2"
   }
 }
