@@ -29,8 +29,7 @@ export class Program {
         this.initialize();
     }
     initialize() {
-        const gl = this.gl;
-        const appState = this.appState;
+        const { gl, appState, vertexSource, fragmentSource } = this;
         if (appState.program === this) {
             gl.useProgram(null);
             appState.program = null;
@@ -38,20 +37,19 @@ export class Program {
         this.linked = false;
         this.uniformBlockCount = 0;
         this.samplerCount = 0;
-        if (this.vertexSource) {
-            this.vertexShader = new Shader(gl, appState, gl.VERTEX_SHADER, this.vertexSource);
+        if (vertexSource) {
+            this.vertexShader = new Shader(gl, appState, gl.VERTEX_SHADER, vertexSource);
         }
-        if (this.fragmentSource) {
-            this.fragmentShader = new Shader(gl, appState, gl.FRAGMENT_SHADER, this.fragmentSource);
+        if (fragmentSource) {
+            this.fragmentShader = new Shader(gl, appState, gl.FRAGMENT_SHADER, fragmentSource);
         }
         this.program = this.gl.createProgram();
         return this;
     }
     link() {
-        const gl = this.gl;
-        const program = this.program;
-        gl.attachShader(program, this.vertexShader.shader);
-        gl.attachShader(program, this.fragmentShader.shader);
+        const { gl, program, vertexShader, fragmentShader } = this;
+        gl.attachShader(program, vertexShader.shader);
+        gl.attachShader(program, fragmentShader.shader);
         gl.linkProgram(program);
         return this;
     }
@@ -66,23 +64,22 @@ export class Program {
         if (this.linked) {
             return this;
         }
-        const gl = this.gl;
-        const program = this.program;
+        const { gl, program, vertexShader, fragmentShader, vertexSource, fragmentSource } = this;
         if (gl.getProgramParameter(program, gl.LINK_STATUS)) {
             this.linked = true;
             this.initVariables();
         }
         else {
             console.error(gl.getProgramInfoLog(program));
-            this.vertexShader.checkCompilation();
-            this.fragmentShader.checkCompilation();
+            vertexShader.checkCompilation();
+            fragmentShader.checkCompilation();
         }
-        if (this.vertexSource) {
-            this.vertexShader.delete();
+        if (vertexSource) {
+            vertexShader.delete();
             this.vertexShader = null;
         }
-        if (this.fragmentSource) {
-            this.fragmentShader.delete();
+        if (fragmentSource) {
+            fragmentShader.delete();
             this.fragmentShader = null;
         }
         return this;

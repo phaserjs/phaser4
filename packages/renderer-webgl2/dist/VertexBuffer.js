@@ -52,9 +52,7 @@ export class VertexBuffer {
         this.restore(data);
     }
     restore(data) {
-        const gl = this.gl;
-        const appState = this.appState;
-        const binding = this.binding;
+        const { gl, appState, binding, byteLength, usage } = this;
         if (appState.vertexArray) {
             gl.bindVertexArray(null);
             appState.vertexArray = null;
@@ -62,23 +60,21 @@ export class VertexBuffer {
         this.buffer = gl.createBuffer();
         gl.bindBuffer(binding, this.buffer);
         if (data === undefined) {
-            gl.bufferData(binding, this.byteLength, this.usage);
+            gl.bufferData(binding, byteLength, usage);
         }
         else {
-            gl.bufferData(binding, data, this.usage);
+            gl.bufferData(binding, data, usage);
         }
         gl.bindBuffer(binding, null);
         return this;
     }
     data(data, byteOffset = 0) {
-        const gl = this.gl;
-        const appState = this.appState;
-        const binding = this.binding;
+        const { gl, appState, binding, buffer } = this;
         if (appState.vertexArray) {
             gl.bindVertexArray(null);
             appState.vertexArray = null;
         }
-        gl.bindBuffer(binding, this.buffer);
+        gl.bindBuffer(binding, buffer);
         gl.bufferSubData(binding, byteOffset, data);
         gl.bindBuffer(binding, null);
         return this;

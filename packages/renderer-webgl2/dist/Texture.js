@@ -62,8 +62,7 @@ export class Texture {
         return this;
     }
     resize(width, height, depth = 0) {
-        const gl = this.gl;
-        const binding = this.binding;
+        const { gl, binding, appState } = this;
         let texture = this.texture;
         if (texture && width === this.width && height === this.height && depth === this.depth) {
             return this;
@@ -80,60 +79,56 @@ export class Texture {
         this.width = width;
         this.height = height;
         this.depth = depth;
-        gl.texParameteri(binding, gl.TEXTURE_MIN_FILTER, this.minFilter);
-        gl.texParameteri(binding, gl.TEXTURE_MAG_FILTER, this.magFilter);
-        gl.texParameteri(binding, gl.TEXTURE_WRAP_S, this.wrapS);
-        gl.texParameteri(binding, gl.TEXTURE_WRAP_T, this.wrapT);
-        gl.texParameteri(binding, gl.TEXTURE_WRAP_R, this.wrapR);
-        gl.texParameteri(binding, gl.TEXTURE_COMPARE_FUNC, this.compareFunc);
-        gl.texParameteri(binding, gl.TEXTURE_COMPARE_MODE, this.compareMode);
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, this.flipY);
-        gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, this.premultiplyAlpha);
-        if (this.minLOD !== null) {
-            gl.texParameterf(binding, gl.TEXTURE_MIN_LOD, this.minLOD);
+        const { minFilter, magFilter, wrapS, wrapT, wrapR, compareFunc, compareMode, flipY, premultiplyAlpha } = this;
+        gl.texParameteri(binding, gl.TEXTURE_MIN_FILTER, minFilter);
+        gl.texParameteri(binding, gl.TEXTURE_MAG_FILTER, magFilter);
+        gl.texParameteri(binding, gl.TEXTURE_WRAP_S, wrapS);
+        gl.texParameteri(binding, gl.TEXTURE_WRAP_T, wrapT);
+        gl.texParameteri(binding, gl.TEXTURE_WRAP_R, wrapR);
+        gl.texParameteri(binding, gl.TEXTURE_COMPARE_FUNC, compareFunc);
+        gl.texParameteri(binding, gl.TEXTURE_COMPARE_MODE, compareMode);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, flipY);
+        gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, premultiplyAlpha);
+        const { minLOD, maxLOD, baseLevel, maxLevel, maxAnisotropy, is3D, mipmaps, internalFormat } = this;
+        if (minLOD !== null) {
+            gl.texParameterf(binding, gl.TEXTURE_MIN_LOD, minLOD);
         }
-        if (this.maxLOD !== null) {
-            gl.texParameterf(binding, gl.TEXTURE_MAX_LOD, this.maxLOD);
+        if (maxLOD !== null) {
+            gl.texParameterf(binding, gl.TEXTURE_MAX_LOD, maxLOD);
         }
-        if (this.baseLevel !== null) {
-            gl.texParameteri(binding, gl.TEXTURE_BASE_LEVEL, this.baseLevel);
+        if (baseLevel !== null) {
+            gl.texParameteri(binding, gl.TEXTURE_BASE_LEVEL, baseLevel);
         }
-        if (this.maxLevel !== null) {
-            gl.texParameteri(binding, gl.TEXTURE_MAX_LEVEL, this.maxLevel);
+        if (maxLevel !== null) {
+            gl.texParameteri(binding, gl.TEXTURE_MAX_LEVEL, maxLevel);
         }
-        if (this.maxAnisotropy > 1) {
-            gl.texParameteri(binding, this.appState.textureAnisotropy.TEXTURE_MAX_ANISOTROPY_EXT, this.maxAnisotropy);
+        if (maxAnisotropy > 1) {
+            gl.texParameteri(binding, appState.textureAnisotropy.TEXTURE_MAX_ANISOTROPY_EXT, maxAnisotropy);
         }
         let levels = 1;
-        if (this.is3D) {
-            if (this.mipmaps) {
+        if (is3D) {
+            if (mipmaps) {
                 levels = Math.floor(Math.log2(Math.max(Math.max(width, height), depth))) + 1;
             }
-            gl.texStorage3D(binding, levels, this.internalFormat, width, height, depth);
+            gl.texStorage3D(binding, levels, internalFormat, width, height, depth);
         }
         else {
-            if (this.mipmaps) {
+            if (mipmaps) {
                 levels = Math.floor(Math.log2(Math.max(width, height))) + 1;
             }
-            gl.texStorage2D(binding, levels, this.internalFormat, width, height);
+            gl.texStorage2D(binding, levels, internalFormat, width, height);
         }
         return this;
     }
     data(data) {
-        const gl = this.gl;
-        const binding = this.binding;
+        const { gl, binding, format, type, is3D, mipmaps, currentUnit, compressed } = this;
+        let { width, height, depth } = this;
         const source = (Array.isArray(data)) ? data : [data];
-        let width = this.width;
-        let height = this.height;
-        let depth = this.depth;
-        const format = this.format;
-        const type = this.type;
-        const is3D = this.is3D;
-        const numLevels = (this.mipmaps) ? source.length : 1;
-        const generateMipmaps = (this.mipmaps && source.length === 1);
+        const numLevels = (mipmaps) ? source.length : 1;
+        const generateMipmaps = (mipmaps && source.length === 1);
         let i;
-        this.bind(Math.max(this.currentUnit, 0));
-        if (this.compressed) {
+        this.bind(Math.max(currentUnit, 0));
+        if (compressed) {
             if (is3D) {
                 for (i = 0; i < numLevels; i++) {
                     gl.compressedTexSubImage3D(binding, i, 0, 0, 0, width, height, depth, format, source[i]);
@@ -181,8 +176,7 @@ export class Texture {
         return this;
     }
     delete() {
-        const gl = this.gl;
-        const appState = this.appState;
+        const { gl, appState } = this;
         if (this.texture) {
             gl.deleteTexture(this.texture);
             this.texture = null;
@@ -194,8 +188,7 @@ export class Texture {
         return this;
     }
     bind(unit) {
-        const gl = this.gl;
-        const appState = this.appState;
+        const { gl, appState } = this;
         const currentTexture = appState.textures[unit];
         if (currentTexture !== this) {
             if (currentTexture) {
