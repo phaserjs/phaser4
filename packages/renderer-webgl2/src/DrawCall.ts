@@ -138,21 +138,8 @@ export class DrawCall
 
     draw (): DrawCall
     {
-        const gl = this.gl;
-        const appState = this.appState;
-
-        const uniformNames = this.uniformNames;
-        const uniformValues = this.uniformValues;
-        const uniformBuffers = this.uniformBuffers;
-        const uniformBlockCount = this.currentProgram.uniformBlockCount;
-        const textures = this.textures;
-        const textureCount = this.currentProgram.samplerCount;
-        const drawPrimitive = this.drawPrimitive;
-        const numElements = this.numElements;
-        const numInstances = this.numInstances;
-        const currentVertexArray = this.currentVertexArray;
-        const offsets = this.offsets;
-        const numDraws = this.numDraws;
+        const { gl, appState, uniformNames, uniformValues, uniformBuffers, uniformBlockCount } = this;
+        const { textures, textureCount, drawPrimitive, numElements, numInstances, currentVertexArray, offsets, numDraws } = this;
 
         let indexed = false;
 

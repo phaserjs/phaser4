@@ -63,16 +63,12 @@ export class Framebuffer
 
     colorTarget (index: number, attachment: Texture | Renderbuffer, target?: GLenum): Framebuffer
     {
-        const gl = this.gl;
+        const { gl, colorAttachmentEnums, colorAttachments, colorAttachmentTargets } = this;
 
         if (target === undefined)
         {
             target = (attachment.is3D) ? 0 : gl.TEXTURE_2D;
         }
-
-        const colorAttachmentEnums = this.colorAttachmentEnums;
-        const colorAttachments = this.colorAttachments;
-        const colorAttachmentTargets = this.colorAttachmentTargets;
 
         if (index >= this.numColorTargets)
         {
@@ -158,7 +154,7 @@ export class Framebuffer
 
     resize (width?: number, height?: number): Framebuffer
     {
-        const gl = this.gl;
+        const { gl, colorAttachmentEnums, colorAttachments, colorAttachmentTargets } = this;
 
         if (!width)
         {
@@ -171,10 +167,6 @@ export class Framebuffer
         }
 
         const currentFramebuffer = this.bindAndCaptureState();
-
-        const colorAttachmentEnums = this.colorAttachmentEnums;
-        const colorAttachments = this.colorAttachments;
-        const colorAttachmentTargets = this.colorAttachmentTargets;
 
         for (let i = 0; i < this.numColorTargets; i++)
         {
@@ -231,12 +223,11 @@ export class Framebuffer
 
     delete (): Framebuffer
     {
-        const gl = this.gl;
-        const appState = this.appState;
+        const { gl, appState, framebuffer } = this;
 
-        if (this.framebuffer)
+        if (framebuffer)
         {
-            gl.deleteFramebuffer(this.framebuffer);
+            gl.deleteFramebuffer(framebuffer);
 
             this.framebuffer = null;
 
@@ -270,12 +261,11 @@ export class Framebuffer
 
     bindForDraw (): Framebuffer
     {
-        const gl = this.gl;
-        const appState = this.appState;
+        const { gl, appState, framebuffer } = this;
 
         if (appState.drawFramebuffer !== this)
         {
-            gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, this.framebuffer);
+            gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, framebuffer);
 
             appState.drawFramebuffer = this;
         }
@@ -285,12 +275,11 @@ export class Framebuffer
 
     bindForRead (): Framebuffer
     {
-        const gl = this.gl;
-        const appState = this.appState;
+        const { gl, appState, framebuffer } = this;
 
         if (appState.readFramebuffer !== this)
         {
-            gl.bindFramebuffer(gl.READ_FRAMEBUFFER, this.framebuffer);
+            gl.bindFramebuffer(gl.READ_FRAMEBUFFER, framebuffer);
 
             appState.readFramebuffer = this;
         }
@@ -300,14 +289,13 @@ export class Framebuffer
 
     bindAndCaptureState (): Framebuffer
     {
-        const gl = this.gl;
-        const appState = this.appState;
+        const { gl, appState, framebuffer } = this;
 
         const currentFramebuffer = appState.drawFramebuffer;
 
         if (currentFramebuffer !== this)
         {
-            gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, this.framebuffer);
+            gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, framebuffer);
         }
 
         return currentFramebuffer;
