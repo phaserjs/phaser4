@@ -68,8 +68,9 @@ export class DrawCall {
         return this;
     }
     draw() {
-        const { gl, appState, uniformNames, uniformValues, uniformBuffers, uniformBlockCount } = this;
-        const { textures, textureCount, drawPrimitive, numElements, numInstances, currentVertexArray, offsets, numDraws } = this;
+        const { gl, appState, currentProgram, uniformNames, uniformValues, uniformBuffers } = this;
+        const { textures, drawPrimitive, numElements, numInstances, currentVertexArray, offsets, numDraws } = this;
+        const { uniformBlockCount, samplerCount } = currentProgram;
         let indexed = false;
         this.currentProgram.bind();
         if (currentVertexArray) {
@@ -82,7 +83,7 @@ export class DrawCall {
         for (let base = 0; base < uniformBlockCount; base++) {
             uniformBuffers[base].bind(base);
         }
-        for (let tIndex = 0; tIndex < textureCount; tIndex++) {
+        for (let tIndex = 0; tIndex < samplerCount; tIndex++) {
             textures[tIndex].bind(tIndex);
         }
         if (appState.multiDrawInstanced) {
