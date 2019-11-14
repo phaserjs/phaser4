@@ -107,7 +107,7 @@ export class Texture
             baseLevel = null,
             maxLevel = null,
             maxAnisotropy = 1,
-            flipY = true,
+            flipY = false,
             premultiplyAlpha = true
         } = options;
 

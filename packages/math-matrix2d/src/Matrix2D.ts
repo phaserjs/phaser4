@@ -48,12 +48,12 @@ export class Matrix2D
 
     getX (x: number, y: number): number
     {
-        return x * this.a + y * this.c + this.tx;
+        return (x * this.a) + (y * this.c) + this.tx;
     }
 
     getY (x: number, y: number): number
     {
-        return x * this.b + y * this.d + this.ty;
+        return (x * this.b) + (y * this.d) + this.ty;
     }
 
     [Symbol.iterator] ()
