@@ -1,17 +1,6 @@
 import { enableBlend, setBlendModeNormal } from './Blend';
-import { DrawCall } from './DrawCall';
-import { Framebuffer } from './Framebuffer';
 import { IState } from './IState';
-import { ITexture } from './ITexture';
 import { IViewport } from './IViewport';
-import { Program } from './Program';
-import { Query } from './Query';
-import { Renderbuffer } from './Renderbuffer';
-import { Shader } from './Shader';
-import { Texture } from './Texture';
-import { UniformBuffer } from './UniformBuffer';
-import { VertexArray } from './VertexArray';
-import { VertexBuffer } from './VertexBuffer';
 
 export class WebGL2Renderer
 {
@@ -22,6 +11,7 @@ export class WebGL2Renderer
     height: number = 0;
 
     state: IState;
+
     viewport: IViewport = {
         x: 0,
         y: 0,
@@ -249,121 +239,4 @@ export class WebGL2Renderer
 
         return this;
     }
-
-    getX (x: number): number
-    {
-        return x / this.width * 2 - 1;
-    }
-    
-    getY (y: number): number
-    {
-        return y / this.height * -2 + 1;
-    }
-
-    getXY (x: number, y: number): { x: number, y: number }
-    {
-        return {
-            x: x / this.width * 2 - 1,
-            y: y / this.height * -2 + 1
-        };
-    }
-
-    getQuadPosition (x: number, y: number, width: number, height: number): Float32Array
-    {
-        const TL = this.getXY(x, y);
-        const TR = this.getXY(x + width, y);
-        const BL = this.getXY(x, y + height);
-        const BR = this.getXY(x + width, y + height);
-       
-        return new Float32Array([
-            TL.x, TL.y,
-            TR.x, TR.y,
-            BL.x, BL.y,
-            BL.x, BL.y,
-            TR.x, TR.y,
-            BR.x, BR.y
-        ]);
-    }
-
-    createProgram (vsSource: string | Shader, fsSource: string | Shader): Program
-    {
-        const program = new Program(this.gl, this.state, vsSource, fsSource);
-
-        program.link().checkLinkage();
-
-        return program;
-    }
-
-    createVertexArray ()
-    {
-        return new VertexArray(this.gl, this.state);
-    }
-
-    createVertexBuffer (type: GLenum, itemSize: number, data: ArrayBufferView | number, usage?: GLenum)
-    {
-        return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage);
-    }
-
-    createMatrixBuffer (type: GLenum, data: ArrayBufferView, usage: GLenum = this.gl.STATIC_DRAW): VertexBuffer
-    {
-        return new VertexBuffer(this.gl, this.state, type, 0, data, usage);
-    }
-
-    createInterleavedBuffer (bytesPerVertex: number, data: ArrayBufferView | number, usage: GLenum = this.gl.STATIC_DRAW): VertexBuffer
-    {
-        return new VertexBuffer(this.gl, this.state, null, bytesPerVertex, data, usage);
-    }
-
-    createIndexBuffer (type: GLenum, itemSize: number, data: ArrayBufferView, usage: GLenum = this.gl.STATIC_DRAW): VertexBuffer
-    {
-        return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage, true);
-    }
-
-    createUniformBuffer (layout: GLenum[], usage: GLenum = this.gl.DYNAMIC_DRAW): UniformBuffer
-    {
-        return new UniformBuffer(this.gl, this.state, layout, usage);
-    }
-
-    createDrawCall (program: Program, vertexArray: VertexArray): DrawCall
-    {
-        return new DrawCall(this.gl, this.state, program, vertexArray);
-    }
-
-    createFramebuffer (): Framebuffer
-    {
-        return new Framebuffer(this.gl, this.state);
-    }
-
-    createQuery (target: GLenum): Query
-    {
-        return new Query(this.gl, target);
-    }
-
-    createRenderbuffer (width: number, height: number, internalFormat: GLenum, samples: number = 0): Renderbuffer
-    {
-        return new Renderbuffer(this.gl, width, height, internalFormat, samples);
-    }
-
-    createEmptyTexture2D (width: number, height: number, options: ITexture = {}): Texture
-    {
-        return new Texture(this.gl, this.state, this.gl.TEXTURE_2D, null, width, height, 0, false, options);
-    }
-
-    createTexture2D (image: TexImageSource, width?: number, height?: number, options: ITexture = {}): Texture
-    {
-        if (!width && image && image.width)
-        {
-            width = image.width;
-        }
-
-        if (!height && image && image.height)
-        {
-            height = image.height;
-        }
-
-        return new Texture(this.gl, this.state, this.gl.TEXTURE_2D, image, width, height, 0, false, options);
-    }
-
-    //  TODO createTextureArray
-
 }
