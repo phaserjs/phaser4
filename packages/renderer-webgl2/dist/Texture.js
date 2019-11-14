@@ -35,7 +35,7 @@ export class Texture {
         }
         // -1 indicates unbound
         this.currentUnit = -1;
-        const { minFilter = image ? gl.LINEAR_MIPMAP_NEAREST : gl.NEAREST, magFilter = image ? gl.LINEAR : gl.NEAREST, wrapS = gl.REPEAT, wrapT = gl.REPEAT, wrapR = gl.REPEAT, compareMode = gl.NONE, compareFunc = gl.LEQUAL, minLOD = null, maxLOD = null, baseLevel = null, maxLevel = null, maxAnisotropy = 1, flipY = true, premultiplyAlpha = true } = options;
+        const { minFilter = image ? gl.LINEAR_MIPMAP_NEAREST : gl.NEAREST, magFilter = image ? gl.LINEAR : gl.NEAREST, wrapS = gl.REPEAT, wrapT = gl.REPEAT, wrapR = gl.REPEAT, compareMode = gl.NONE, compareFunc = gl.LEQUAL, minLOD = null, maxLOD = null, baseLevel = null, maxLevel = null, maxAnisotropy = 1, flipY = false, premultiplyAlpha = true } = options;
         this.minFilter = minFilter;
         this.magFilter = magFilter;
         this.wrapS = wrapS;

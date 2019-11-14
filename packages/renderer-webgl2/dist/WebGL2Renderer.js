@@ -1,13 +1,4 @@
 import { enableBlend, setBlendModeNormal } from './Blend';
-import { DrawCall } from './DrawCall';
-import { Framebuffer } from './Framebuffer';
-import { Program } from './Program';
-import { Query } from './Query';
-import { Renderbuffer } from './Renderbuffer';
-import { Texture } from './Texture';
-import { UniformBuffer } from './UniformBuffer';
-import { VertexArray } from './VertexArray';
-import { VertexBuffer } from './VertexBuffer';
 export class WebGL2Renderer {
     constructor(canvas, contextAttributes) {
         this.width = 0;
@@ -162,79 +153,6 @@ export class WebGL2Renderer {
     clear() {
         this.gl.clear(this.clearBits);
         return this;
-    }
-    getX(x) {
-        return x / this.width * 2 - 1;
-    }
-    getY(y) {
-        return y / this.height * -2 + 1;
-    }
-    getXY(x, y) {
-        return {
-            x: x / this.width * 2 - 1,
-            y: y / this.height * -2 + 1
-        };
-    }
-    getQuadPosition(x, y, width, height) {
-        const TL = this.getXY(x, y);
-        const TR = this.getXY(x + width, y);
-        const BL = this.getXY(x, y + height);
-        const BR = this.getXY(x + width, y + height);
-        return new Float32Array([
-            TL.x, TL.y,
-            TR.x, TR.y,
-            BL.x, BL.y,
-            BL.x, BL.y,
-            TR.x, TR.y,
-            BR.x, BR.y
-        ]);
-    }
-    createProgram(vsSource, fsSource) {
-        const program = new Program(this.gl, this.state, vsSource, fsSource);
-        program.link().checkLinkage();
-        return program;
-    }
-    createVertexArray() {
-        return new VertexArray(this.gl, this.state);
-    }
-    createVertexBuffer(type, itemSize, data, usage) {
-        return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage);
-    }
-    createMatrixBuffer(type, data, usage = this.gl.STATIC_DRAW) {
-        return new VertexBuffer(this.gl, this.state, type, 0, data, usage);
-    }
-    createInterleavedBuffer(bytesPerVertex, data, usage = this.gl.STATIC_DRAW) {
-        return new VertexBuffer(this.gl, this.state, null, bytesPerVertex, data, usage);
-    }
-    createIndexBuffer(type, itemSize, data, usage = this.gl.STATIC_DRAW) {
-        return new VertexBuffer(this.gl, this.state, type, itemSize, data, usage, true);
-    }
-    createUniformBuffer(layout, usage = this.gl.DYNAMIC_DRAW) {
-        return new UniformBuffer(this.gl, this.state, layout, usage);
-    }
-    createDrawCall(program, vertexArray) {
-        return new DrawCall(this.gl, this.state, program, vertexArray);
-    }
-    createFramebuffer() {
-        return new Framebuffer(this.gl, this.state);
-    }
-    createQuery(target) {
-        return new Query(this.gl, target);
-    }
-    createRenderbuffer(width, height, internalFormat, samples = 0) {
-        return new Renderbuffer(this.gl, width, height, internalFormat, samples);
-    }
-    createEmptyTexture2D(width, height, options = {}) {
-        return new Texture(this.gl, this.state, this.gl.TEXTURE_2D, null, width, height, 0, false, options);
-    }
-    createTexture2D(image, width, height, options = {}) {
-        if (!width && image && image.width) {
-            width = image.width;
-        }
-        if (!height && image && image.height) {
-            height = image.height;
-        }
-        return new Texture(this.gl, this.state, this.gl.TEXTURE_2D, image, width, height, 0, false, options);
     }
 }
 //# sourceMappingURL=WebGL2Renderer.js.map

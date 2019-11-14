@@ -1,0 +1,1 @@
+{"version":3,"file":"CreateMatrixBuffer.d.ts","sourceRoot":"","sources":["../src/CreateMatrixBuffer.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,gBAAgB,CAAC;AAC9C,OAAO,EAAE,cAAc,EAAE,MAAM,kBAAkB,CAAC;AAElD,wBAAgB,kBAAkB,CAAE,QAAQ,EAAE,cAAc,EAAE,IAAI,EAAE,MAAM,EAAE,IAAI,EAAE,eAAe,EAAE,KAAK,GAAE,MAAgC,GAAG,YAAY,CAGxJ"}

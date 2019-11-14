@@ -1,0 +1,1 @@
+{"version":3,"file":"CreateRenderbuffer.js","sourceRoot":"","sources":["../src/CreateRenderbuffer.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,gBAAgB,CAAC;AAG9C,MAAM,UAAU,kBAAkB,CAAE,QAAwB,EAAE,KAAa,EAAE,MAAc,EAAE,cAAsB,EAAE,UAAkB,CAAC;IAEpI,OAAO,IAAI,YAAY,CAAC,QAAQ,CAAC,EAAE,EAAE,KAAK,EAAE,MAAM,EAAE,cAAc,EAAE,OAAO,CAAC,CAAC;AACjF,CAAC"}

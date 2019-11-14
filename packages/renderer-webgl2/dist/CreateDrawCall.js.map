@@ -1,0 +1,1 @@
+{"version":3,"file":"CreateDrawCall.js","sourceRoot":"","sources":["../src/CreateDrawCall.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,YAAY,CAAC;AAKtC,MAAM,UAAU,cAAc,CAAE,QAAwB,EAAE,OAAgB,EAAE,WAAwB;IAEhG,OAAO,IAAI,QAAQ,CAAC,QAAQ,CAAC,EAAE,EAAE,QAAQ,CAAC,KAAK,EAAE,OAAO,EAAE,WAAW,CAAC,CAAC;AAC3E,CAAC"}

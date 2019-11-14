@@ -1,0 +1,1 @@
+{"version":3,"file":"CreateUniformBuffer.js","sourceRoot":"","sources":["../src/CreateUniformBuffer.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAE,MAAM,iBAAiB,CAAC;AAGhD,MAAM,UAAU,mBAAmB,CAAE,QAAwB,EAAE,MAAgB,EAAE,QAAgB,QAAQ,CAAC,EAAE,CAAC,YAAY;IAErH,OAAO,IAAI,aAAa,CAAC,QAAQ,CAAC,EAAE,EAAE,QAAQ,CAAC,KAAK,EAAE,MAAM,EAAE,KAAK,CAAC,CAAC;AACzE,CAAC"}

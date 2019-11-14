@@ -1,0 +1,1 @@
+{"version":3,"file":"CreateRenderbuffer.d.ts","sourceRoot":"","sources":["../src/CreateRenderbuffer.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,gBAAgB,CAAC;AAC9C,OAAO,EAAE,cAAc,EAAE,MAAM,kBAAkB,CAAC;AAElD,wBAAgB,kBAAkB,CAAE,QAAQ,EAAE,cAAc,EAAE,KAAK,EAAE,MAAM,EAAE,MAAM,EAAE,MAAM,EAAE,cAAc,EAAE,MAAM,EAAE,OAAO,GAAE,MAAU,GAAG,YAAY,CAGtJ"}
