@@ -27,7 +27,7 @@ export class Transform {
         this.dirty = true;
         return this;
     }
-    setScale(scaleX, scaleY) {
+    setScale(scaleX, scaleY = scaleX) {
         this._scale.set(scaleX, scaleY);
         this.dirty = true;
         this.updateCache();
@@ -39,7 +39,7 @@ export class Transform {
         this.updateCache();
         return this;
     }
-    setOrigin(originX, originY) {
+    setOrigin(originX, originY = originX) {
         this._origin.set(originX, originY);
         this.dirty = true;
         return this;

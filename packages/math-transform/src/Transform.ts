@@ -61,7 +61,7 @@ export class Transform
         return this;
     }
 
-    setScale (scaleX: number, scaleY: number): Transform
+    setScale (scaleX: number, scaleY: number = scaleX): Transform
     {
         this._scale.set(scaleX, scaleY);
 
@@ -83,7 +83,7 @@ export class Transform
         return this;
     }
 
-    setOrigin (originX: number, originY: number): Transform
+    setOrigin (originX: number, originY: number = originX): Transform
     {
         this._origin.set(originX, originY);
 
