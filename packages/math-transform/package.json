@@ -1,0 +1,28 @@
+{
+  "name": "@phaserjs/math-transform",
+  "version": "0.0.0",
+  "description": "Phaser.Math.Transform",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phaserjs/phaser4.git"
+  },
+  "author": "Richard Davey <rich@photonstorm.com> (http://www.photonstorm.com)",
+  "license": "MIT",
+  "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
+  "dependencies": {
+    "@phaserjs/math-matrix2d": "0.0.6",
+    "@phaserjs/math-vec2": "0.0.3",
+    "typescript": "^3.7.2"
+  }
+}
