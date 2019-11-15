@@ -15,6 +15,11 @@ export declare class Transform {
     private _d;
     constructor(x?: number, y?: number, rotation?: number, scaleX?: number, scaleY?: number);
     update(): boolean;
+    setPosition(x: number, y: number): Transform;
+    setScale(scaleX: number, scaleY: number): Transform;
+    setSkew(skewX: number, skewY: number): Transform;
+    setOrigin(originX: number, originY: number): Transform;
+    setRotation(rotation: number): Transform;
     private updateCache;
     set x(value: number);
     get x(): number;

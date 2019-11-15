@@ -22,6 +22,32 @@ export class Transform {
         this.dirty = false;
         return true;
     }
+    setPosition(x, y) {
+        this._position.set(x, y);
+        this.dirty = true;
+        return this;
+    }
+    setScale(scaleX, scaleY) {
+        this._scale.set(scaleX, scaleY);
+        this.dirty = true;
+        this.updateCache();
+        return this;
+    }
+    setSkew(skewX, skewY) {
+        this._skew.set(skewX, skewY);
+        this.dirty = true;
+        this.updateCache();
+        return this;
+    }
+    setOrigin(originX, originY) {
+        this._origin.set(originX, originY);
+        this.dirty = true;
+        return this;
+    }
+    setRotation(rotation) {
+        this.rotation = rotation;
+        return this;
+    }
     updateCache() {
         const { _rotation, _skew, _scale } = this;
         this._a = Math.cos(_rotation + _skew.y) * _scale.x;

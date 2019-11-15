@@ -52,6 +52,53 @@ export class Transform
         return true;
     }
 
+    setPosition (x: number, y: number): Transform
+    {
+        this._position.set(x, y);
+
+        this.dirty = true;
+
+        return this;
+    }
+
+    setScale (scaleX: number, scaleY: number): Transform
+    {
+        this._scale.set(scaleX, scaleY);
+
+        this.dirty = true;
+
+        this.updateCache();
+
+        return this;
+    }
+
+    setSkew (skewX: number, skewY: number): Transform
+    {
+        this._skew.set(skewX, skewY);
+
+        this.dirty = true;
+
+        this.updateCache();
+
+        return this;
+    }
+
+    setOrigin (originX: number, originY: number): Transform
+    {
+        this._origin.set(originX, originY);
+
+        this.dirty = true;
+
+        return this;
+    }
+
+    setRotation (rotation: number): Transform
+    {
+        this.rotation = rotation;
+
+        return this;
+    }
+
     private updateCache ()
     {
         const { _rotation, _skew, _scale } = this;
