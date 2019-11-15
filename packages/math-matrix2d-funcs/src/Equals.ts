@@ -1,5 +1,7 @@
 import { IMatrix2D } from '@phaserjs/math-matrix2d';
 
+//  Compares the a and b matrix and returns if they are equal, based on the epsilon.
+
 export function Equals (a: IMatrix2D, b: IMatrix2D, epsilon: number = 0.000001): boolean
 {
     const { a: a0, b: b0, c: c0, d: d0, tx: tx0, ty: ty0 } = a;

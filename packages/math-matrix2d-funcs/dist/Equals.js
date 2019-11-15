@@ -1,3 +1,4 @@
+//  Compares the a and b matrix and returns if they are equal, based on the epsilon.
 export function Equals(a, b, epsilon = 0.000001) {
     const { a: a0, b: b0, c: c0, d: d0, tx: tx0, ty: ty0 } = a;
     const { a: a1, b: b1, c: c1, d: d1, tx: tx1, ty: ty1 } = b;

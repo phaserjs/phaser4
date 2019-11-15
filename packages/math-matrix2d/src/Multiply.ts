@@ -1,7 +1,7 @@
 import { IMatrix2D } from './IMatrix2D';
 import { Matrix2D } from './Matrix2D';
 
-//  Multiplies the target Matrix by the src Matrix and returns the target
+//  Multiplies the target Matrix by the src Matrix and returns the target.
 
 export function Multiply (target: Matrix2D, src: IMatrix2D): Matrix2D
 {

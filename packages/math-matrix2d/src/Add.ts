@@ -1,7 +1,7 @@
 import { IMatrix2D } from './IMatrix2D';
 import { Matrix2D } from './Matrix2D';
 
-//  Adds the src Matrix to the target Matrix and returns the target
+//  Adds the src Matrix to the target Matrix and returns the target.
 
 export function Add (target: Matrix2D, src: IMatrix2D): Matrix2D
 {

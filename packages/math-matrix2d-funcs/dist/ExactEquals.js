@@ -1,3 +1,4 @@
+//  Compares the a and b matrix and returns if they are equal.
 export function ExactEquals(a, b) {
     return (a.a === b.a &&
         a.b === b.b &&

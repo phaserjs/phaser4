@@ -1,6 +1,8 @@
 import { IMatrix2D } from './IMatrix2D';
 import { Matrix2D } from './Matrix2D';
 
+//  Subtracts the src Matrix from the target Matrix and returns the target.
+
 export function Subtract (target: Matrix2D, src: IMatrix2D): Matrix2D
 {
     target.a -= src.a;

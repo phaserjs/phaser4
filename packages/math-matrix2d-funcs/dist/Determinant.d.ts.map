@@ -1,1 +1,1 @@
-{"version":3,"file":"Determinant.d.ts","sourceRoot":"","sources":["../src/Determinant.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAE,MAAM,yBAAyB,CAAC;AAEpD,wBAAgB,WAAW,CAAE,GAAG,EAAE,SAAS,GAAG,MAAM,CAGnD"}
+{"version":3,"file":"Determinant.d.ts","sourceRoot":"","sources":["../src/Determinant.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAE,MAAM,yBAAyB,CAAC;AAIpD,wBAAgB,WAAW,CAAE,GAAG,EAAE,SAAS,GAAG,MAAM,CAKnD"}

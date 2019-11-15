@@ -1,5 +1,7 @@
 import { IMatrix2D, Matrix2D } from '@phaserjs/math-matrix2d';
 
+//  Multiplies matrix a by b and returns the result in a new Matrix2D.
+
 export function Multiply (a: IMatrix2D, b: IMatrix2D): Matrix2D
 {
     const { a: a0, b: b0, c: c0, d: d0, tx: tx0, ty: ty0 } = a;

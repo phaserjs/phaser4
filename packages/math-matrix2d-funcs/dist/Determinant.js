@@ -1,4 +1,6 @@
+//  Return the determinant for the src Matrix.
 export function Determinant(src) {
-    return (src.a * src.d - src.b * src.c);
+    const { a, b, c, d } = src;
+    return (a * d) - (b * c);
 }
 //# sourceMappingURL=Determinant.js.map

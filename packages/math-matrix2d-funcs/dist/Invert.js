@@ -1,22 +1,12 @@
 import { Matrix2D } from '@phaserjs/math-matrix2d';
-export function Invert(src, out = new Matrix2D()) {
-    const a = src.a;
-    const b = src.b;
-    const c = src.c;
-    const d = src.d;
-    const tx = src.tx;
-    const ty = src.ty;
-    let det = a * d - b * c;
-    if (!det) {
+//  Inverts the src Matrix and returns the result in a new Matrix, or null.
+export function Invert(src) {
+    const { a, b, c, d, tx, ty } = src;
+    let determinant = (a * d) - (b * c);
+    if (!determinant) {
         return null;
     }
-    det = 1 / det;
-    out.a = d * det;
-    out.b = -b * det;
-    out.c = -c * det;
-    out.d = a * det;
-    out.tx = (c * ty - d * tx) * det;
-    out.ty = (b * tx - a * ty) * det;
-    return out;
+    determinant = 1 / determinant;
+    return new Matrix2D(d * determinant, -b * determinant, -c * determinant, a * determinant, (c * ty - d * tx) * determinant, (b * tx - a * ty) * determinant);
 }
 //# sourceMappingURL=Invert.js.map

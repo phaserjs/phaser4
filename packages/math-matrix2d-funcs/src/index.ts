@@ -1,6 +1,5 @@
 export * from './Add';
 export * from './Clone';
-export * from './Copy';
 export * from './Determinant';
 export * from './Equals';
 export * from './ExactEquals';
@@ -17,3 +16,4 @@ export * from './Rotate';
 export * from './Scale';
 export * from './Subtract';
 export * from './Translate';
+export * from './Zero';
