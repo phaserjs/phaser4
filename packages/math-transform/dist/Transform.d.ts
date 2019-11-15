@@ -1,17 +1,18 @@
 import { Matrix2D } from '@phaserjs/math-matrix2d';
+import { Vec2 } from '@phaserjs/math-vec2';
 export declare class Transform {
     readonly local: Matrix2D;
     readonly world: Matrix2D;
-    private _position;
-    private _scale;
-    private _skew;
-    private _origin;
-    private _rotation;
+    protected _position: Vec2;
+    protected _scale: Vec2;
+    protected _skew: Vec2;
+    protected _origin: Vec2;
+    protected _rotation: number;
+    protected dirty: boolean;
     private _a;
     private _b;
     private _c;
     private _d;
-    private dirty;
     constructor(x?: number, y?: number, rotation?: number, scaleX?: number, scaleY?: number);
     update(): boolean;
     private updateCache;

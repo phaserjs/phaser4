@@ -6,18 +6,18 @@ export class Transform
     readonly local: Matrix2D;
     readonly world: Matrix2D;
 
-    private _position: Vec2;
-    private _scale: Vec2;
-    private _skew: Vec2;
-    private _origin: Vec2;
-    private _rotation: number;
+    protected _position: Vec2;
+    protected _scale: Vec2;
+    protected _skew: Vec2;
+    protected _origin: Vec2;
+    protected _rotation: number;
+
+    protected dirty: boolean;
 
     private _a: number;
     private _b: number;
     private _c: number;
     private _d: number;
-
-    private dirty: boolean;
 
     constructor (x: number = 0, y: number = 0, rotation: number = 0, scaleX: number = 1, scaleY = 1)
     {
