@@ -4,6 +4,7 @@
   "description": "A fast, free and fun HTML5 Game Framework for Desktop and Mobile web browsers.",
   "scripts": {
     "build": "node ./scripts/build.js",
+    "packagencu": "node ./scripts/package-update.js",
     "lerna": "lerna"
   },
   "repository": {
@@ -18,15 +19,18 @@
   },
   "homepage": "https://phaser.io",
   "devDependencies": {
-    "chokidar": "^3.3.0",
-    "lerna": "^3.18.3",
+    "chokidar": "^3.3.1",
+    "lerna": "^3.20.2",
     "lerna-wizard": "^1.1.1",
-    "rollup": "^1.26.3",
+    "rollup": "^1.30.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-terser": "^5.1.2",
-    "rollup-plugin-typescript2": "^0.25.2",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.2"
+    "rollup-plugin-terser": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.25.3",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "npm-check-updates": "^4.0.1"
   }
 }
