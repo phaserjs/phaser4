@@ -20,7 +20,9 @@ function updatePackage ()
 {
     let dir = source + inputDirs[i];
 
+    console.log('');
     console.log(dir);
+    console.log('');
 
     ncu.run({
 
@@ -33,16 +35,8 @@ function updatePackage ()
         if (Object.keys(upgraded).length > 0)
         {
             console.log('Dependencies:', upgraded);
-
-            // execSync('cd ' + dir);
-    
-            // const result = execSync('npm i');
         
-            let result = execSync('npm install', { cwd: dir, env: process.env, stdio: 'inherit' });
-
-            console.log(result.toString("utf8"));
-    
-            // execSync('cd ../..');
+            execSync('npm install', { cwd: dir, env: process.env, stdio: 'inherit' });
         }
         else
         {
