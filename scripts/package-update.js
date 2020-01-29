@@ -45,8 +45,7 @@ function updatePackage ()
 
         i++;
 
-        // if (i < inputDirs.length)
-        if (i < 3)
+        if (i < inputDirs.length)
         {
             updatePackage();
         }
