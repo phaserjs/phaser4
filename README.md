@@ -85,4 +85,8 @@ console.log(Angle(test));
 
 This repo uses https://www.npmjs.com/package/npm-check-updates - which you can run from the cli via `ncu`.
 
+Use this in the root folder to check for out dated packages for the core scripts.
+
+Then, use the script `npm run packagencu` to run ncu on all sub-packages and update each of them in turn.
+
 Also, use `lerna-wizard` to check for out-dated packages across sub-packages.
