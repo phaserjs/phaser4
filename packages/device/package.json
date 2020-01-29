@@ -21,7 +21,7 @@
   "license": "MIT",
   "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
   "devDependencies": {
-    "typescript": "^3.6.2"
+    "typescript": "^3.7.5"
   },
   "gitHead": "5c3238c17d3fa8f8ef9ebb9305e0804996f6070d"
 }
