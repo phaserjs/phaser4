@@ -1,6 +1,6 @@
 # Phaser 4
 
-Needless to say, don't use this yet.
+Needless to say, you can't use Phaser 4 in production yet, so please don't even try.
 
 ## Contributor Guide
 
